@@ -1,0 +1,1 @@
+{"name":"Local: 520A","url":"s:\\coding\\codeforces\\codeforces\\520A.cpp","tests":[{"id":1706773921253,"input":"12\ntoosmallword\n","output":"NO"},{"id":1706774039916,"input":"35\nTheQuickBrownFoxJumpsOverTheLazyDog","output":"YES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\520A.cpp","group":"local","local":true}

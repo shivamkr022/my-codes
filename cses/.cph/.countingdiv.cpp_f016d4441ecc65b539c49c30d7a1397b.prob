@@ -1,0 +1,1 @@
+{"name":"Local: countingdiv","url":"s:\\coding\\cses\\countingdiv.cpp","tests":[{"id":1711709203159,"input":"3\n16\n17\n18","output":"5\n2\n6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\cses\\countingdiv.cpp","group":"local","local":true}

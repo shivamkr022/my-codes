@@ -1,0 +1,1 @@
+{"name":"Local: 71A","url":"s:\\coding\\codeforces\\codeforces\\71A.cpp","tests":[{"id":1706029276067,"input":"4\nword\nlocalization\ninternationalization\npneumonoultramicroscopicsilicovolcanoconiosis","output":"word\nl10n\ni18n\np43s"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\71A.cpp","group":"local","local":true}

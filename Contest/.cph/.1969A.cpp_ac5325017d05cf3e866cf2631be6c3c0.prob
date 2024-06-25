@@ -1,0 +1,1 @@
+{"name":"Local: 1969A","url":"s:\\coding\\Contest\\1969A.cpp","tests":[{"id":1714403037630,"input":"3\n5\n3 1 2 5 4\n4\n2 3 4 1\n2\n2 1","output":"2\n3\n2"},{"id":1714403262888,"input":"1\n2\n2 1","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\Contest\\1969A.cpp","group":"local","local":true}

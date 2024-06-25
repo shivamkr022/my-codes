@@ -1,0 +1,1 @@
+{"name":"Local: 1903A","url":"s:\\coding\\TLE\\1903A.cpp","tests":[{"id":1713442964730,"input":"5\n3 2\n1 2 3\n3 1\n9 9 9\n4 4\n6 4 2 1\n4 3\n10 3 830 14\n2 1\n3 1\n","output":""},{"id":1713443223491,"input":"","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\TLE\\1903A.cpp","group":"local","local":true}

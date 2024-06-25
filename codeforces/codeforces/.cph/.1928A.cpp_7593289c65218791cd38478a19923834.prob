@@ -1,0 +1,1 @@
+{"name":"Local: 1928A","url":"s:\\coding\\codeforces\\codeforces\\1928A.cpp","tests":[{"id":1716405652291,"input":"7\n1 1\n2 1\n2 6\n3 2\n2 2\n2 4\n6 3\n","output":"No\nNo\nYes\nYes\nYes\nYes\nNo\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\1928A.cpp","group":"local","local":true}

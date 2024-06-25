@@ -1,0 +1,1 @@
+{"name":"Local: SubarraySum1","url":"s:\\coding\\cses\\SubarraySum1.cpp","tests":[{"id":1713096889131,"input":"5 7\n2 -1 3 5 -2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\cses\\SubarraySum1.cpp","group":"local","local":true}

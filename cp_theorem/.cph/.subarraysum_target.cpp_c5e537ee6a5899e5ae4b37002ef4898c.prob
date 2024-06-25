@@ -1,0 +1,1 @@
+{"name":"Local: subarraysum_target","url":"s:\\coding\\cp_theorem\\subarraysum_target.cpp","tests":[{"id":1713096793482,"input":"5 7\n2 4 1 2 7","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\cp_theorem\\subarraysum_target.cpp","group":"local","local":true}

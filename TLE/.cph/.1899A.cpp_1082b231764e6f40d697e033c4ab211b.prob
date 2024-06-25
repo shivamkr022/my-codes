@@ -1,0 +1,1 @@
+{"name":"Local: 1899A","url":"s:\\coding\\TLE\\1899A.cpp","tests":[{"id":1713444805568,"input":"6\n1\n3\n5\n100\n999\n1000","output":"First\nSecond\nFirst\nFirst\nSecond\nFirst"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\TLE\\1899A.cpp","group":"local","local":true}

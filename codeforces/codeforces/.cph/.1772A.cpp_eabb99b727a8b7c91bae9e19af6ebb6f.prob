@@ -1,0 +1,1 @@
+{"name":"Local: 1772A","url":"s:\\coding\\codeforces\\codeforces\\1772A.cpp","tests":[{"id":1706954814213,"input":"4\n4+2\n0+0\n3+7\n8+9","output":"6\n0\n10\n17"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\1772A.cpp","group":"local","local":true}

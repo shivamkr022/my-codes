@@ -1,0 +1,1 @@
+{"name":"Local: 1761A","url":"s:\\coding\\TLE\\1761A.cpp","tests":[{"id":1713871654907,"input":"4\n1 1 1\n2 1 2\n3 1 1\n4 1 1\n","output":""},{"id":1713872068856,"input":"1\n2 2 1\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\TLE\\1761A.cpp","group":"local","local":true}

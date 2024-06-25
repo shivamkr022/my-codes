@@ -1,0 +1,1 @@
+{"name":"Local: 1935A","url":"s:\\coding\\Contest\\1935A.cpp","tests":[{"id":1709650871689,"input":"5\n4\ncpm\n2\ngrib\n10\nkupitimilablodarbuz\n1000000000\ncapybara\n6\nabacaba","output":"cpm\nbirggrib\nkupitimilablodarbuz\narabypaccapybara\nabacaba"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\Contest\\1935A.cpp","group":"local","local":true}

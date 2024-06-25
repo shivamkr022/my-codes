@@ -1,0 +1,1 @@
+{"name":"Local: 501A","url":"s:\\coding\\codeforces\\codeforces\\501A.cpp","tests":[{"id":1709555634382,"input":"1000 1000 1 1\n","output":"Tie\n"},{"id":1709555666531,"input":"500 1000 20 30\n","output":"Vasya\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\501A.cpp","group":"local","local":true}

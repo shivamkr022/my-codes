@@ -1,0 +1,1 @@
+{"name":"Local: 1703A","url":"s:\\coding\\codeforces\\codeforces\\1703A.cpp","tests":[{"id":1706710332752,"input":"10\nYES\nyES\nyes\nYes\nYeS\nNoo\norZ\nyEz\nYas\nXES","output":"YES\nYES\nYES\nYES\nYES\nNO\nNO\nNO\nNO\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\1703A.cpp","group":"local","local":true}
