@@ -39,6 +39,8 @@ using namespace std;
 /* write core logic here */
 void solve(){
     int x1,x2,x3;
+
+    
     cin>>x1>>x2>>x3;
 
     vector<int>arr;

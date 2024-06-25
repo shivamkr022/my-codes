@@ -45,8 +45,14 @@ bool isFair(int num) {
             return false;
         }
     }
+
+
+
     return true;
 }
+
+///sgsgb
+
 
 void solve() {
     int n;
