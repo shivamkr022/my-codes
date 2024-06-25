@@ -38,39 +38,25 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n, k;
-    cin >> n >> k;
-    string s;
-    cin >> s;
-    int count = 0;
-    // Initial count of 'W' in the first window
-    for(int i = 0; i < k; i++){
-        if(s[i] == 'W'){
-            count++;
+    int x,y,k; 
+    cin>>x>>y>>k;
+        int z = y - x%y;
+        while(k>=z){
+            k -= z;
+            x += z;
+            while(x%y == 0){
+                x /= y;
+            }
+            z = y - x%y;
+            if(x == 1){
+                k = k%z;
+                x += k; k = 0;
+                break;    
+            }
         }
-    }
-    // Set the initial answer to the count of the first window
-    int ans = count;
-
-    int i = 1; // Start of the window
-    int j = k; // End of the window
-
-    // Use a while loop to slide the window across the string
-    while(j < n){
-        // Update count based on the outgoing and incoming characters
-        if(s[i - 1] == 'W') count--;
-        if(s[j] == 'W') count++;
-
-        // Update the minimum count found so far
-        ans = min(ans, count);
-
-        // Move the window
-        i++;
-        j++;
-    }
-    cout << ans << endl;
+        x += k;
+        cout<<x<<endl;
 }
-
 /* logic ends */
 
 signed main(){
@@ -80,10 +66,11 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
-    return 0;
+return 0;
 }
+
