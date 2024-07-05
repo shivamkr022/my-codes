@@ -1,7 +1,7 @@
 /*
   ------------------------------------------
  |                                        |
- |      Code Crafted by Shivam            |
+ |      Code Crafted by Shivam     |
  |                                        |
   ------------------------------------------
     \        ,     ,        /
@@ -36,37 +36,37 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
-// Function to check if a number is fair
-bool isFair(int num) {
-    string numStr = to_string(num);
-    for (char digitChar : numStr) {
-        int digit = digitChar - '0';
-        if (digit != 0 && num % digit != 0) {
-            return false;
-        }
-    }
-    return true;
-}
+/* write core logic here */
+void solve(){
+    string a,b;
+    cin>>a>>b;
+    int n = a.length();
+    int m = b.length();
+    int ans = n+m;
 
-void solve() {
-    int n;
-    cin >> n;
-    while (!isFair(n)) {
-        n++;
+    for(int i=0;i<m;i++){
+      int idx =i;
+      for(int j=0;j<n;j++){
+        if(idx<m and a[j]==b[idx]) idx++;
+      }
+      ans = min(ans,n+m-idx+i);
     }
-    cout << n << endl;
+    cout<<ans<<endl;
 }
+/* logic ends */
 
-signed main() {
+signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     #ifndef ONLINE_JUDGE
-        freopen("Error.txt", "w", stderr);
+        freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    cin >> t;
-    while (t--) {
+    cin>>t;
+    //t = 1;
+    while(t--){
         solve();
     }
-    return 0;
+return 0;
 }
+
