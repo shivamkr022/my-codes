@@ -62,7 +62,6 @@ void solve(){
             mx2+=d;
         }
         cout<<ans<<endl;
-
 }
 /* logic ends */
 

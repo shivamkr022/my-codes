@@ -38,24 +38,9 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
-    vector<int>arr;
-    for(int i=1;i<=n/2;i++){
-        if(n%i==0) arr.push_back(i);
-    }
-    sort(arr.begin(),arr.end());
-    int curr=1;
-    int ans =0;                       // brute force approach
-    for(int i=1;i<arr.size();i++){
-        if(arr[i-1]+1==arr[i]){ curr++;
-        ans=max(ans,curr);
-        }
-        else{
-            curr=1;
-        }
-    }
-    cout<<ans%mod<<endl;
+    int n,k;
+    cin>>n>>k;
+    
 }
 /* logic ends */
 
@@ -66,8 +51,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    cin>>t;
-   // t = 1;
+    //cin>>t;
+    t = 1;
     while(t--){
         solve();
     }

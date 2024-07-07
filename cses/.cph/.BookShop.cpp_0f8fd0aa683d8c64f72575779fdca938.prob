@@ -1,0 +1,1 @@
+{"name":"Local: BookShop","url":"s:\\coding\\cses\\BookShop.cpp","tests":[{"id":1720374395695,"input":"10 10\n1 2 10 6 5 1 7 4 10 4\n6 3 8 1 7 3 8 6 5 6","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\cses\\BookShop.cpp","group":"local","local":true}

@@ -38,24 +38,23 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
-    vector<int>arr;
-    for(int i=1;i<=n/2;i++){
-        if(n%i==0) arr.push_back(i);
-    }
-    sort(arr.begin(),arr.end());
-    int curr=1;
-    int ans =0;                       // brute force approach
-    for(int i=1;i<arr.size();i++){
-        if(arr[i-1]+1==arr[i]){ curr++;
-        ans=max(ans,curr);
+    int n,x;
+    cin>>n>>x;
+    vector<int>price(n);
+    for(int i=0;i<n;i++) cin>>price[i];
+    vector<int>page(n);
+    for(int i=0;i<n;i++) cin>>page[i];
+    vector<vector<int>>dp(n+1,vector<int>(x+1,0));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<=x;j++){
+            dp[i+1][j]= dp[i][j];
+            if(j>=price[i]){
+                dp[i+1][j] = max (dp[i+1][j], (page[i]+dp[i][j-price[i]]));
+               // debug(dp[i+1][j]);
+            }
         }
-        else{
-            curr=1;
-        }
     }
-    cout<<ans%mod<<endl;
+    cout<<dp[n][x]<<endl;
 }
 /* logic ends */
 
@@ -66,8 +65,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    cin>>t;
-   // t = 1;
+    //cin>>t;
+    t = 1;
     while(t--){
         solve();
     }
