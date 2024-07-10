@@ -22,12 +22,12 @@ void solve(){
     cin>>n;
     string s;
     cin>>s;
+    int s1 = stoi(s);
 
     int x=0;
     int y=0;
     for(int i=0;i<n;i++){
-        int x=s[0]+s[1]+s[2];
-        int y=s[3]+s[4]+s[5];
+
 
    if(x==y) cout<<"yes"<<endl;
     else cout<<"no"<<endl;
