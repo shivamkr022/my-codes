@@ -36,58 +36,23 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
-bool cross(int n, int m, int k, const string &a) {   // fn to check it can cross road or not
-    
-    vector<bool> rch(n + 2, false);
-    rch[0] = true;  // starting point is reachable always
-
-    queue<pair<int, int>> qu;
-    qu.push({0, 0});  
-
-    while (!qu.empty()) {
-        int pos = qu.front().first;
-        int dist = qu.front().second;
-        qu.pop();
-        for (int i = 1; i<= m; i++) {
-            int pos1 = pos + i;
-            if (pos1 >= n + 1) {
-                return true;
-            }
-            if (pos1 <= n && (a[pos1 - 1] == 'C' || rch[pos1])) {
-                continue;
-            }
-            if (pos1 <= n && a[pos1 - 1] == 'L') {
-                rch[pos1] = true;
-                qu.push({pos1, dist});
-            }
-            if (pos1 <= n && a[pos1 - 1] == 'W') {
-                if (dist + 1 <= k) {
-                    rch[pos1] = true;
-                    qu.push({pos1, dist + 1});
-                }
-            }
-            if (pos1 == n + 1) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 /* write core logic here */
 void solve(){
-    int n, m, k;
-    cin >> n >> m >> k;
-    string cat;
-    cin >> cat;
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    int ans =0;
+    set<int>st;   // its for check whether character is used before or not
 
-    if (cross(n, m, k, cat)) {
-        cout << "YES" << endl;
-    }
-    else{
-       cout << "NO" << endl;
+    for(int i=0;i<n;i++){
+        if(st.find(s[i])==st.end()){  // char isnt used before
+        st.insert(s[i]);
+        ans+=(n-i);      // a good observation
         }
     }
+    cout<<ans<<endl;
+}
 /* logic ends */
 
 signed main(){

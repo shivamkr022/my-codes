@@ -18,19 +18,16 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 void solve(){
-    int n;
-    cin>>n; // total money he has
-    
-    int k;
-    cin>>k; // price of 1st banana
-
-    int w;
-    cin>>w; // no of bananas
-    int sum=0;
-    for(int i=k;i<w*k;i=i+k){
-        sum+=k;
+int k,n,w;
+cin>>k>>n>>w;
+    int sum=(w*(w+1))/2;
+    int ans = k*sum;
+    if(ans>n){
+        cout<<(ans-n)<<endl;
     }
-    cout<<sum<<endl; 
+    else{
+    cout<<0<<endl; 
+    }
 }
 int32_t main(){
     ios_base::sync_with_stdio(false);

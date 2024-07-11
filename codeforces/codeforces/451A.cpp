@@ -20,8 +20,10 @@ using namespace std;
 void solve(){
     int n,m;
     cin>>n>>m;
-    int x=min(n,m);
-    if(x%2==0) cout<<"Malvika"<<endl;
+	if (n > m) {
+		swap(n, m);
+	}
+    if(n%2==0) cout<<"Malvika"<<endl;
     else cout<<"Akshat"<<endl;
 }
 int32_t main(){

@@ -36,58 +36,19 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
-bool cross(int n, int m, int k, const string &a) {   // fn to check it can cross road or not
-    
-    vector<bool> rch(n + 2, false);
-    rch[0] = true;  // starting point is reachable always
-
-    queue<pair<int, int>> qu;
-    qu.push({0, 0});  
-
-    while (!qu.empty()) {
-        int pos = qu.front().first;
-        int dist = qu.front().second;
-        qu.pop();
-        for (int i = 1; i<= m; i++) {
-            int pos1 = pos + i;
-            if (pos1 >= n + 1) {
-                return true;
-            }
-            if (pos1 <= n && (a[pos1 - 1] == 'C' || rch[pos1])) {
-                continue;
-            }
-            if (pos1 <= n && a[pos1 - 1] == 'L') {
-                rch[pos1] = true;
-                qu.push({pos1, dist});
-            }
-            if (pos1 <= n && a[pos1 - 1] == 'W') {
-                if (dist + 1 <= k) {
-                    rch[pos1] = true;
-                    qu.push({pos1, dist + 1});
-                }
-            }
-            if (pos1 == n + 1) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 /* write core logic here */
 void solve(){
-    int n, m, k;
-    cin >> n >> m >> k;
-    string cat;
-    cin >> cat;
-
-    if (cross(n, m, k, cat)) {
-        cout << "YES" << endl;
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    if(arr[n-1]>=arr[n-2]){
+        cout<<"YES"<<endl;
     }
     else{
-       cout << "NO" << endl;
-        }
+        cout<<"NO"<<endl;
     }
+}
 /* logic ends */
 
 signed main(){
@@ -98,7 +59,7 @@ signed main(){
     #endif
     int t;
     cin>>t;
-   // t = 1;
+    //t = 1;
     while(t--){
         solve();
     }
