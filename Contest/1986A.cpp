@@ -52,8 +52,6 @@ void solve(){
     int k2= abs(arr[2]-arr[1]);
     cout<<k1+k2<<endl;
 
-   // cout<<abs(arr[1]-arr[0])+abs(arr[2]-arr[1])<<endl;;
-
 }
 /* logic ends */
 
