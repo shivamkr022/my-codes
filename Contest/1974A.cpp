@@ -21,12 +21,14 @@ int main() {
 
         if (x <= rem) {
             cout << yc << endl;
-        } else {
+        } 
+        else {
             int rem2 = x - rem;
             if (rem2 % 15 == 0) {
                 int ans = yc + (rem2 / 15);
                 cout << ans << endl;
-            } else {
+            } 
+            else {
                 cout << (yc + (rem2 / 15) + 1) << endl;  // fixed this line to ensure proper computation
             }
         }
