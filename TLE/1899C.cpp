@@ -40,15 +40,34 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
+    vector<int>arr(n);                       /// input
     for(int i=0;i<n;i++) cin>>arr[i];
-    int ans = 0;
+
+    int ans =INT_MIN;
     int temp =0;
+    bool flag = true;
     for(int i=0;i<n;i++){
-        if(((abs(arr[i])%2==0 and abs(arr[i+1])%2!=0) or (abs(arr[i])%2!=0 and abs(arr[i+1])%2==0))){       
-           // debug(arr[i]);
-            ans+=arr[i];
+        if(arr[i]>0){
+            flag=false;
         }
+    }
+    if(flag==true){
+        for(int i=0;i<n;i++){
+            ans = max(ans,arr[i]); // just when every ele of the arr is negatie=ve
+        }                 
+        cout<<ans<<endl;
+        return;
+    }
+
+    for(int i=0;i<n;i++){
+        temp+=arr[i];
+        if(i!=0 and abs(arr[i])%2 == abs(arr[i-1])%2){    // A bit of kadanes algorithm
+            temp=arr[i];
+        }
+        if(temp<0){
+            temp=0;
+        }
+            ans = max(ans,temp);
     }
     cout<<ans<<endl;
 }
