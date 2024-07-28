@@ -12,9 +12,9 @@
   
   Happy coding! 
 */
- 
+
 /* includes and all */
- 
+
 #include<bits/stdc++.h>
 #ifndef ONLINE_JUDGE
 #define debug(x) cout<<"errr----  "<< #x <<" " <<x<<endl 
@@ -35,28 +35,26 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
- 
+
 /* write core logic here */
 void solve(){
     int n;
     cin>>n;
-    int count =1;
-    vector<int> coins(n);
-    vector<int>pos(n);  // to store pos of each element
-    for(int i=0;i<n;i++){
-        cin>>coins[i];
-        coins[i]--;  // decrease 1 from each ele of the array
-        pos[coins[i]]=i;  // coins[i] ka index i hai
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    int k = arr[0];
+    if(n==1){
+        cout<<k<<endl;
+        return;
     }
-    for(int i=1;i<n;i++){
-        if(pos[i]<pos[i-1]){
-            count++;
-        }
+    int ans = -1;
+    for(int i=0;i<n;i+=2){
+        ans = max(ans ,arr[i]);
     }
-    cout<<count<<"\n";
+    cout<<ans<<endl;
 }
 /* logic ends */
- 
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -64,10 +62,11 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }
 return 0;
 }
+

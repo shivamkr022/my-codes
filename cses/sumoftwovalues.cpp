@@ -12,7 +12,7 @@
   
   Happy coding! 
 */
-
+ 
 /* includes and all */
 #include<iostream>
 #include<vector>
@@ -21,14 +21,14 @@
 #include<climits>
 #include<map>
 using namespace std;
-
+ 
 int main(){
     int n,tar; // array size , target
     cin>>n>>tar; // input
     vector<int>ans;  // to store ans
     vector<int> nums(n); // given vector
     for(int i=0;i<n;i++) cin>>nums[i];
-
+ 
     map<int,int>mp;
      for(int i=0;i<n;i++){
         int rem = tar-nums[i];
