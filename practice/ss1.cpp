@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 using namespace std;
 
@@ -8,55 +7,31 @@ int main() {
     cin >> t;
     
     while (t--) {
-        int n, m;
-        cin >> n >> m;
+        int n, x;
+        cin >> n >> x;
         
-        vector<vector<int>> a(n, vector<int>(m));
-        vector<int> all_elements;
-        
-        // Read matrix a
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                cin >> a[i][j];
-                all_elements.push_back(a[i][j]);
-            }
-        }
-        
-        // Sort all elements
-        sort(all_elements.begin(), all_elements.end());
-        
-        // Create matrix b
-        vector<vector<int>> b(n, vector<int>(m));
-        
-        int index = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                b[i][j] = all_elements[(index + 1) % (n * m)];
-                index++;
-            }
-        }
-        
-        // Check if matrix b is valid
-        bool valid = true;
-        for (int i = 0; i < n && valid; ++i) {
-            for (int j = 0; j < m && valid; ++j) {
-                if (a[i][j] == b[i][j]) {
-                    valid = false;
+        long long count = 0;
+
+        // Iterate over possible values of a
+        for (int a = 1; a <= x; ++a) {
+            // Iterate over possible values of b
+            for (int b = 1; b <= x - a; ++b) {
+                // Calculate the maximum possible value of c
+                int max_c = x - a - b;
+                
+                if (a + b > 0) {
+                    int max_c_by_n = (n - a * b) / (a + b);
+                    if (max_c_by_n >= 0) {
+                        int valid_c = min(max_c, max_c_by_n);
+                        if (valid_c >= 1) {
+                            count += valid_c;
+                        }
+                    }
                 }
             }
         }
-        
-        // Output result
-        if (valid) {
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < m; ++j) {
-                    cout << b[i][j] << " ";
-                }
-                cout << endl;
-            }
-        } else {
-            cout << -1 << endl;
-        }
+
+        cout << count << endl;
     }
     
     return 0;
