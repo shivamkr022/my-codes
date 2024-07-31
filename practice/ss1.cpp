@@ -1,38 +1,57 @@
-#include <iostream>
-#include <algorithm>
+/*
+  ------------------------------------------
+ |                                        |
+ |      Code Crafted by Shivam     |
+ |                                        |
+  ------------------------------------------
+    \        ,     ,        /
+      \      |     |      /
+         \   \_/   /
+           \  -----  /
+             \_/
+  
+  Happy coding! 
+*/
+
+#include<bits/stdc++.h>
 using namespace std;
 
-int main() {
+#define endl "\n"
+#define int long long int
+
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; ++i) cin >> arr[i];
+
+    if (n == 1) {
+        cout << 0 << endl;
+        return;
+    }
+
+    int max_diff = 0;
+    for (int i = 0; i < n / 2; ++i) {
+        if (arr[i] != arr[n - i - 1]) {
+            max_diff = max(max_diff, abs(arr[i] - arr[n - i - 1]));
+        }
+    }
+
+    if (max_diff == 0) {
+        cout << 0 << endl; // All elements are the same or it's already a palindrome
+    } else {
+        cout << max_diff << endl;
+    }
+}
+
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
     int t;
     cin >> t;
-    
     while (t--) {
-        int n, x;
-        cin >> n >> x;
-        
-        long long count = 0;
-
-        // Iterate over possible values of a
-        for (int a = 1; a <= x; ++a) {
-            // Iterate over possible values of b
-            for (int b = 1; b <= x - a; ++b) {
-                // Calculate the maximum possible value of c
-                int max_c = x - a - b;
-                
-                if (a + b > 0) {
-                    int max_c_by_n = (n - a * b) / (a + b);
-                    if (max_c_by_n >= 0) {
-                        int valid_c = min(max_c, max_c_by_n);
-                        if (valid_c >= 1) {
-                            count += valid_c;
-                        }
-                    }
-                }
-            }
-        }
-
-        cout << count << endl;
+        solve();
     }
-    
     return 0;
 }

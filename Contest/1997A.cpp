@@ -35,35 +35,33 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
-
 /* write core logic here */
 void solve(){
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
+        string s;
+        cin >> s;
+        if(s.length()==1){
+            if(s=="z"){
+                cout<<(s+'k')<<endl;
+                return;
+            }
+            else{
+                cout<<(s+"z")<<endl;
+                return;
+            }
+        }
+        int x=0;
+        for(int i=0;i<s.length();i++){
+            if(s[i]!=s[i+1]){
+            x++;
+            }
+        else{
+            break;
+           }
+        }
+        if(s[x]=='z'){
 
-    sort(arr.begin(),arr.end());
-    int sum=0;
-    while(k){
-    for(int i=0;i<n;i++){
-    if(arr[i]+arr[i+1]>arr[n-1]){
-      int ad = arr[i]+arr[i+1];
-      sum+=ad;
-      i+=2;
-      n--;
-      k--;
+        }
     }
-    else{
-      sum+=arr[n-1];
-      i++;
-      n--;
-      k--;
-         }
-      }
-    }
-   cout<<sum<<endl;
- }
 /* logic ends */
 
 signed main(){

@@ -38,32 +38,30 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n,k;
-    cin>>n>>k;
+    int n,c;
+    cin>>n>>c;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-
-    sort(arr.begin(),arr.end());
-    int sum=0;
-    while(k){
-    for(int i=0;i<n;i++){
-    if(arr[i]+arr[i+1]>arr[n-1]){
-      int ad = arr[i]+arr[i+1];
-      sum+=ad;
-      i+=2;
-      n--;
-      k--;
+    int l = 1, r = 1e9;
+    while(l <= r) {
+        int mid = l + (r - l) / 2;
+        int sum = 0;
+        for(int i = 0; i < n; i++){
+            sum += (arr[i] + 2 * mid) * (arr[i] + 2 * mid);
+            if(sum > c) break;
+        }
+        if(sum == c){
+            cout << mid << "\n";
+            return;
+        }
+        if(sum > c){
+            r = mid - 1;
+        } 
+        else{
+            l = mid + 1;
+        }
     }
-    else{
-      sum+=arr[n-1];
-      i++;
-      n--;
-      k--;
-         }
-      }
-    }
-   cout<<sum<<endl;
- }
+}
 /* logic ends */
 
 signed main(){
@@ -74,7 +72,7 @@ signed main(){
     #endif
     int t;
     cin>>t;
-    //t = 1;
+   // t = 1;
     while(t--){
         solve();
     }
