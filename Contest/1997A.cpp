@@ -39,29 +39,25 @@ using namespace std;
 void solve(){
         string s;
         cin >> s;
-        if(s.length()==1){
-            if(s=="z"){
-                cout<<(s+'k')<<endl;
-                return;
-            }
-            else{
-                cout<<(s+"z")<<endl;
-                return;
-            }
-        }
-        int x=0;
-        for(int i=0;i<s.length();i++){
-            if(s[i]!=s[i+1]){
-            x++;
-            }
-        else{
-            break;
-           }
-        }
-        if(s[x]=='z'){
-
-        }
-    }
+        int n=s.length();
+		for (int i = 0; i < n; i++) {
+			if (i == n - 1) {
+				s+= (s[n - 1] == 'a'? "b" : "a");
+				break;
+			}
+			if (s[i] == s[i + 1]) {
+				if (s[i] == 'a') {
+					s = s.substr(0, i + 1) + "b" + s.substr(i + 1, n - i - 1);
+					break;
+				}
+				else {
+					s = s.substr(0, i + 1) + "a" + s.substr(i + 1, n - i - 1);
+					break;
+				}
+			}
+		}
+		cout<<s<<endl;
+	}
 /* logic ends */
 
 signed main(){
