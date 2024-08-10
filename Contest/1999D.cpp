@@ -38,51 +38,64 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
-        
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
+    string s,t;
+    cin>>s>>t;
+    if(t.length()>s.length()){
+        cout<<"NO"<<endl;
+        return;
+    }
+    int q=0;
+    for(int i=0;i<s.length();i++){
+        if(s[i]=='?'){
+            q++;
         }
-
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
-                }
-            }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
-            }
-
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
+    }
+    if(q>=t.length()){
+        cout<<"YES"<<endl;
+        cout<<t<<endl;
+        return;
+    }
+    if(s.length()==t.length()){
+        bool flag = true;
+        for(int i=0;i<s.length();i++){
+            if(s[i]!=t[i] and s[i]!='?'){
+                flag = false;
             }
         }
-
-        if(flag){
+        if(flag==true){
             cout<<"YES"<<endl;
-            cout<<s<<endl;
+            cout<<t<<endl;
         }
-        else {
+        else{
             cout<<"NO"<<endl;
         }
+    }
+    if(s.length()>t.length()){
+        int i=0;
+        int j=0;
+        while(i<s.length() and j<t.length()){
+            if(s[i]==t[j]){
+                i++;
+                j++;
+            }
+            else if(s[i]!=t[j]){
+                i++;
+            }
+            else if(s[i]=='?'){
+                s[i]=t[j];
+                i++;
+                j++;
+                q--;
+            }
+        }
+    if(q==0){
+        cout<<"YES"<<endl;
+        cout<<s<<endl;
+    }
+    else{
+        cout<<"NO"<<endl;
+    }
+    }
 }
 /* logic ends */
 

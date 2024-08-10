@@ -38,51 +38,20 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
-        
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
-        }
-
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
-                }
-            }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
-            }
-
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
-            }
-        }
-
-        if(flag){
-            cout<<"YES"<<endl;
-            cout<<s<<endl;
-        }
-        else {
-            cout<<"NO"<<endl;
-        }
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    if((a>c and b>d) or (a>d and b>c)){
+        cout<<2<<endl;
+    }
+    else if((a<c and b<d) or (a<d and b<c)){
+        cout<<0<<endl;
+    }
+    else if((a>c and a>d) and (b>c and b>d)){
+        cout<<4<<endl;
+    }
+    else if((a>c and b<c and b<d) or (a>d and b<d and b<c)){
+        cout<<1<<endl;
+    }
 }
 /* logic ends */
 

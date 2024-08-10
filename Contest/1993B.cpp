@@ -38,51 +38,60 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
-        
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    int eve=0;
+    int od =0;
+    for(int i=0;i<n;i++){
+        if(arr[i]%2==0){
+            eve++;
         }
-
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
-                }
-            }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
-            }
-
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
-            }
+        else{
+            od++;
         }
+    }
+    if(eve==n or od==n){
+        cout<<0<<endl;
+        return;
+    }
+    sort(arr.begin(),arr.end());
+    int mxxx= arr[n-1];
+    int sm=0;
+    int mxod=0;
+    int mxev=0;
+    int minod=INT_MAX;
+    int mineve= INT_MAX;
 
-        if(flag){
-            cout<<"YES"<<endl;
-            cout<<s<<endl;
+    for(int i=0;i<n-1;i++){
+        sm+=arr[i];
+        if(arr[i]%2==0){
+            mxev=max(mxev,arr[i]);
+            mineve=min(mineve,arr[i]);
         }
-        else {
-            cout<<"NO"<<endl;
+        else{
+            mxod=max(mxod,arr[i]);
+            minod=min(minod,arr[i]);
         }
+    }
+    int mxx2 = mxod+mxev;
+    if(minod>mineve){
+    if(mxxx>sm and mxxx%2==0){
+        cout<<(eve+1)<<endl;
+    }
+    else{
+        cout<<eve<<endl;
+     }
+    }
+    else{
+    if(mxx2>sm and mxxx%2==0){
+        cout<<(eve+1)<<endl;
+    }
+    else{
+        cout<<eve<<endl;
+     }
+    }
 }
 /* logic ends */
 
@@ -94,7 +103,7 @@ signed main(){
     #endif
     int t;
     cin>>t;
-    //t = 1;
+   // t = 1;
     while(t--){
         solve();
     }

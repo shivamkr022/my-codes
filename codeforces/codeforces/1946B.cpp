@@ -38,51 +38,63 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
-        
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
+    int n,k;
+    cin>>n>>k;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    bool pos = true;
+    bool neg = true;
+    
+    for(int i=0;i<n;i++){
+        if(arr[i]<0){
+            pos=false;
         }
-
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
-                }
-            }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
-            }
-
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
-            }
+        else{
+            neg = false;
         }
-
-        if(flag){
-            cout<<"YES"<<endl;
-            cout<<s<<endl;
+    }
+    if(neg==true){
+       int ans1=0;
+        for(int i=0;i<n;i++){
+            ans1+=arr[i];
         }
-        else {
-            cout<<"NO"<<endl;
+        int rans1 = (ans1 % mod + mod) % mod; // Adjusting for negative values
+        cout << rans1 << endl;
+        return;
+    }
+    int posans=0;
+    if(pos==true){
+        int ans2=0;
+        while(k!=0){
+            for(int i=0;i<arr.size();i++){
+                ans2+=arr[i];
+            }
+            posans=ans2;
+            arr.push_back(ans2);
+            k--;
         }
+        cout<<(posans%mod)<<endl;
+        return;
+    }
+    int curr=0;
+    int sum=INT_MIN;
+    for(int i=0;i<n;i++){
+        curr+=arr[i];
+        if(curr>sum){
+            sum=curr;
+        }
+        if(curr<0){        // kadanes algo for max sum subarray
+            curr=0;
+        }
+    }
+    //debug(sum);
+    int ksum=0;
+    for(int i=0;i<n;i++){
+        ksum+=arr[i];
+    }
+    if(pos==false and neg==false){
+            cout<<(ksum%mod+(k*sum)%mod)%mod<<endl;
+    }
 }
 /* logic ends */
 
@@ -100,4 +112,3 @@ signed main(){
     }
 return 0;
 }
-

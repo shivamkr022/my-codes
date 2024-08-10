@@ -38,51 +38,34 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
-        
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
-        }
-
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
+    int x;
+   cin >> x;
+    vector<int> ans(31, 0);
+    for (int i = 0; i < 30; i++) {
+        if (1 & (x >> i)) {
+            if (ans[i]) {
+                ans[i + 1] = 1;
+                ans[i] = 0;
+            } 
+            else if (i > 0) {
+                if (ans[i - 1] == 1) {
+                    ans[i + 1] = 1;
+                    ans[i - 1] = -1;
+                } else {
+                    ans[i] = 1;
                 }
             }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
+            else if (i == 0) {
+                ans[i] = 1;
             }
+        }
+    }
+    cout << 31 << endl;
+    for (int i = 0; i <= 30; i++) {
+        cout << ans[i] << ' ';
+    }
+    cout << endl;;
 
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
-            }
-        }
-
-        if(flag){
-            cout<<"YES"<<endl;
-            cout<<s<<endl;
-        }
-        else {
-            cout<<"NO"<<endl;
-        }
 }
 /* logic ends */
 

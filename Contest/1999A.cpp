@@ -38,51 +38,12 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
-        
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
-        }
+    int n;
+    cin>>n;
+    int a=n/10;
+    int b=n%10;
+    cout<<(a+b)<<endl;
 
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
-                }
-            }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
-            }
-
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
-            }
-        }
-
-        if(flag){
-            cout<<"YES"<<endl;
-            cout<<s<<endl;
-        }
-        else {
-            cout<<"NO"<<endl;
-        }
 }
 /* logic ends */
 
@@ -94,7 +55,7 @@ signed main(){
     #endif
     int t;
     cin>>t;
-    //t = 1;
+   // t = 1;
     while(t--){
         solve();
     }

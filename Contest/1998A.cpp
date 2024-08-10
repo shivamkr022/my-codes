@@ -38,50 +38,21 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-        string s, t;
-        cin >> s >> t;
+        int x, y, k;
+        cin >> x >> y >> k;
         
-        int m = s.size(), n = t.size();
-        if (n > m) {
-            cout << "NO\n";
-            return;
+        vector<pair<int, int>> v;
+        if (k % 2 == 1) {
+            v.push_back({x, y});
         }
-
-        bool flag = false;
-        string original_s = s; 
-
-        for (int i = 0; i <= m - n; i++) {
-            s = original_s; 
-            int k = 0; 
-
-            for (int j = i; j < m && k < n; j++) {
-                if (s[j] == '?' || s[j] == t[k]) {
-                    s[j] = t[k];
-                    k++;
-                }
-            }
-            for (char &ch : s) {
-                if (ch == '?') ch = 'a';
-            }
-
-            int t_idx = 0; 
-            for (char ch : s) {
-                if (t_idx < n && ch == t[t_idx]) {
-                    t_idx++;
-                }
-            }
-            if (t_idx == n) { 
-                flag = true;
-                break;
-            }
+        for (int i = 1; i <= k / 2; ++i) {
+            v.push_back({x - i, y - i});
         }
-
-        if(flag){
-            cout<<"YES"<<endl;
-            cout<<s<<endl;
+        for (int i = 1; i <= k / 2; ++i) {
+            v.push_back({x + i, y + i});
         }
-        else {
-            cout<<"NO"<<endl;
+        for (const auto& point : v) {
+            cout << point.first << " " << point.second << endl;
         }
 }
 /* logic ends */
