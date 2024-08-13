@@ -1,0 +1,1 @@
+{"name":"Local: 1809B","url":"s:\\coding\\codeforces\\codeforces\\1809B.cpp","tests":[{"id":1723457082918,"input":"4\n1\n3\n5\n975461057789971042\n","output":""},{"id":1723457436154,"input":"1\n975461057789971042\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\1809B.cpp","group":"local","local":true}
