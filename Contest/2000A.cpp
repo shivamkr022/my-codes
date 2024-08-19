@@ -38,14 +38,14 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-int x=23;
- int sum=0;
-        while(x>0){
-            sum+=x%10;
-            x=x/10;
-        }
-        if(x%sum==0)cout<<sum<<endl;
-        else cout<<-1<<endl;; 
+  int n;
+  cin>>n;
+  if((n>=103 and n<=199) or (n>=1003 and n<=1999)){
+    cout<<"YES"<<endl;
+  }
+  else{
+    cout<<"NO"<<endl;
+  }
 }
 /* logic ends */
 
@@ -56,8 +56,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

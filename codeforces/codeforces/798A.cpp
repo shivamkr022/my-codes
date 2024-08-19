@@ -38,14 +38,34 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-int x=23;
- int sum=0;
-        while(x>0){
-            sum+=x%10;
-            x=x/10;
+    string s;
+    cin>>s;
+    int n = s.length();
+    int i=0;
+    int j=n-1;
+    int cnt =0;
+    while(i<=j){
+        if(s[i]!=s[j]){
+            cnt+=2;
+            i++;
+            j--;
         }
-        if(x%sum==0)cout<<sum<<endl;
-        else cout<<-1<<endl;; 
+        else{
+            i++;
+            j--;
+        }
+    }
+    debug(cnt);
+    if(cnt==n){
+        cout<<"NO"<<endl;
+        return;
+    }
+    if(cnt<=2){
+        cout<<"YES"<<endl;
+    }
+    else{
+        cout<<"NO"<<endl;
+    }
 }
 /* logic ends */
 
