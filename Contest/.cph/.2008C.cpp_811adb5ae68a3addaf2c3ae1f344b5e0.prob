@@ -1,0 +1,1 @@
+{"name":"Local: 2008C","url":"s:\\coding\\Contest\\2008C.cpp","tests":[{"id":1725357969044,"input":"5\n1 2\n1 5\n2 2\n10 20\n1 1000000000\n","output":"2\n3\n1\n5\n44721\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\Contest\\2008C.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: 2009B","url":"s:\\coding\\codeforces\\codeforces\\2009B.cpp","tests":[{"id":1725529897728,"input":"3\n4\n#...\n.#..\n..#.\n...#\n2\n.#..\n.#..\n1\n...#\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\2009B.cpp","group":"local","local":true}

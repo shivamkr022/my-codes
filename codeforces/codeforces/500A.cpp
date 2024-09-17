@@ -38,9 +38,20 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int n,k;
+    cin>>n>>k;
+    vector<int>arr(n-1);
+    for(int i=1;i<n;i++){
+        cin>>arr[i];
+    }
+
+    for(int i=1;i<n;i+=arr[i]){
+        if(i==k){
+            cout<<"YES"<<endl;
+            return;
+        }
+    }
+    cout<<"NO"<<endl;
 }
 /* logic ends */
 

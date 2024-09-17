@@ -38,9 +38,12 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int x,y,k;
+    cin>>x>>y>>k;
+    int ss = 2 * ((x + k - 1) / k) - 1;
+    int mm=  2 * ((y + k - 1) / k);
+    int ans = max(ss,mm);
+    cout << ans << endl;
 }
 /* logic ends */
 
@@ -51,8 +54,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

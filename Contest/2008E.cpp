@@ -38,8 +38,20 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    map<char,int>mp1;
+    map<char,int>mp2;
+    for(int i=0;i<n;i++){
+        if(i%2==0){
+            mp1[s[i]]++;  // odd places char freq
+        }
+        else{
+            mp2[s[i]]++;  // even places char freq
+        }
+    }
     
 }
 /* logic ends */

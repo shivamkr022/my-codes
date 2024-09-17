@@ -38,9 +38,26 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int n;
+    cin>>n;
+    vector<vector<char>>arr(n,vector<char>(4));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<4;j++){
+            cin>>arr[i][j];
+        }
+    }
+    vector<int>ans;
+    for(int i = n - 1; i >= 0; i--){
+        for(int j = 0; j < 4; j++){
+            if(arr[i][j] == '#'){
+                ans.push_back(j + 1);  // Storing 1-based column index
+            }
+        }
+    }
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }cout<<endl;
+
 }
 /* logic ends */
 
@@ -51,8 +68,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

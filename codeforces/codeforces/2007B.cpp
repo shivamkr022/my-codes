@@ -38,9 +38,28 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int n,m;
+    cin>>n>>m;
+    vector<int>arr(n);
+    while(m--){
+        char ch;
+        cin>>ch;
+        int a,b;
+        cin>>a>>b;
+        if(ch=='+'){
+            for(int i=a;i<b;i++){
+                arr[i]=arr[i]+1;
+            }
+        }
+        else if(ch=='-'){
+            for(int i=a;i<b;i++){
+              arr[i]=arr[i]-1;
+            }
+        }
+    }
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }cout<<endl;
 }
 /* logic ends */
 

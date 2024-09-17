@@ -38,9 +38,18 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int n;
+    cin>>n;
+
+    string str="aeiou";
+		vector<int> v(5, n / 5);                // n - (n % 5) numbers should be (n / 5)
+		for (int i = 0; i < n % 5; i++) v[i]++; // and the others should be (n / 5) + 1
+
+		for (int i = 0; i < 5; i++) 
+        for (int j = 0; j < v[i]; j++) 
+        cout << str[i];                        // output VOWELS[i] v[i] times
+		cout << endl;
+
 }
 /* logic ends */
 
@@ -51,8 +60,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

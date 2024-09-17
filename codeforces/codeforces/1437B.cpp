@@ -38,9 +38,26 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int n;
+    cin>>n;
+    string binaryString;
+    cin >> binaryString;
+
+    int maxCount = 0;
+    int currentCount = 0;
+
+    for (char c : binaryString) {
+        if (c == '1') {
+            currentCount++;
+            if (currentCount > maxCount) {
+                maxCount = currentCount;
+            }
+        }
+        else{
+            currentCount = 0;
+        }
+    }
+   cout<<maxCount-1<<endl;
 }
 /* logic ends */
 
@@ -51,8 +68,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

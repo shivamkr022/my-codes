@@ -38,9 +38,16 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
+    int n,m,q;
+    cin>>n>>m>>q;
+    vector<int>mm(m);
+    for(int i=0;i<m;i++) cin>>mm[i];
+    vector<int>qq(q);
+    for(int i=0;i<q;i++) cin>>qq[i];
     
+    int ans = min(abs(qq[0]-(mm[0])),abs(qq[0]-mm[1]));
+    cout<<ans<<endl;
+
 }
 /* logic ends */
 
@@ -51,8 +58,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

@@ -38,9 +38,22 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
-    
+    int n;
+    cin>>n;
+    string a,b,c;
+    cin>>a>>b>>c;
+        bool flag = false;
+        for (int i = 0; i < n; i++) {
+            if (a[i] != c[i] && b[i] != c[i]) {
+                flag = true;
+                break;
+            }
+        }
+        if (flag) {
+            cout << "YES" << endl;
+        } else {
+            cout << "NO" << endl;
+        }
 }
 /* logic ends */
 
@@ -51,8 +64,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
