@@ -41,8 +41,30 @@ void solve(){
     int n;
     cin>>n;
     vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int one =0;
+    int two=0;
+    int three=0;
+    int ff =0;
+    int sum=0;
+    for(int i=0;i<n;i++){
+        if(arr[i]==1) one++;
+        if(arr[i]==2) two++;
+        if(arr[i]==3) three++;
+        if(arr[i]==4) ff++;
+        if(arr[i]!=4) sum+=arr[i];
+
+    }
+    int rem =0;
+    if(one>=three){
+        rem = one-three;
+    }
+    else{
+        
+    }
+
 }
 /* logic ends */
 

@@ -41,8 +41,28 @@ void solve(){
     int n;
     cin>>n;
     vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int q;
+    cin>>q;
+    // while(q--){
+    //     int k;
+    //     cin>>k;
+
+    // }
+    vector<int>temp(q);
+    for(int i=0;i<q;i++){
+        cin>>temp[i];
+    }
+    int ans =0;
+    int tt=0;
+    for(int i=0;i<n;i++){
+        if(temp[tt]>=arr[i]){
+           ans++;
+        }
+    }
+
 }
 /* logic ends */
 

@@ -1,61 +1,39 @@
-/*
-  ------------------------------------------
- |                                        |
- |      Code Crafted by Shivam     |
- |                                        |
-  ------------------------------------------
-    \        ,     ,        /
-      \      |     |      /
-         \   \_/   /
-           \  -----  /
-             \_/
-  
-  Happy coding! 
-*/
-
-/* includes and all */
-
 #include<bits/stdc++.h>
-#ifndef ONLINE_JUDGE
-#define debug(x) cout<<"errr----  "<< #x <<" " <<x<<endl 
-#define print(v) do { \
-                    cout << "vect--" << #v << " = [ "; \
-                    for (int i = 0; i < v.size(); i++) { \
-                        cout << v[i] << " "; \
-                    } \
-                    cout << " ]" << endl; \
-                } while(0)
-#else
-#define debug(x)
-#define print(v)
-#endif
-#define endl "\n"
-#define int long long int
-#define mod 1000000007
-#define mn(a,b,c) min(a,min(b,c))
-#define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
-/* write core logic here */
-void solve(){
-  int x = 5%6;
-  cout<<x<<endl;
+void solve() {
+    int n, k;
+    cin >> n >> k;
     
+    int operations = 0;
+    
+    // Process until n becomes 0
+    while (n > 0) {
+        // If n is not divisible by k, subtract the remainder and count that as an operation
+        if (n % k != 0) {
+            operations += n % k;  // Each remainder needs separate operations
+            n -= n % k;
+        } else {
+            // If n is divisible by k, just divide n by k
+            n /= k;
+            operations++;  // Division by k counts as one operation
+        }
+    }
+    
+    cout << operations << endl;
 }
-/* logic ends */
 
-signed main(){
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    #ifndef ONLINE_JUDGE
-        freopen("Error.txt" , "w" , stderr);
-    #endif
+
     int t;
-    //cin>>t;
-    t = 1;
-    while(t--){
+    cin >> t;
+
+    // Solve each test case
+    while (t--) {
         solve();
     }
-return 0;
-}
 
+    return 0;
+}

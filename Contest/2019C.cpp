@@ -38,11 +38,41 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
+    int n,q;
+    cin>>n>>q;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    if(n==1){
+        cout<<1<<endl;
+        return;
+    }
+
+    int sum =0;
+    for(int i=0;i<n;i++){
+        sum+=arr[i];
+    }
+   // debug(sum);
+   if(n==2 and abs(arr[0]-arr[1])>q){
+    cout<<1<<endl;
+    return ;
+   }
+    if(n==2 and sum+q>=4){
+        cout<<2<<endl;
+        return;
+    }
+    if(n==2 and sum+q<4){
+        cout<<1<<endl;
+        return;
+    }
+    if(n==2 and q!=0){
+        cout<<2<<endl;
+        return;
+    }
+    int fsum =sum+q;
+    int ans = fsum/n;
+    cout<<ans<<endl;
+
+
 }
 /* logic ends */
 
@@ -53,8 +83,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

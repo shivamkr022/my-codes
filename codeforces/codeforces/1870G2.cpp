@@ -42,7 +42,23 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    sort(arr.begin(),arr.end());
+
+    if(arr[0]!=1){
+        cout<<"NO"<<endl;
+        return;
+    }
+    int sum=arr[0];
+    for(int i=1;i<n;i++){
+        if(sum<arr[i]){
+           // debug(sum);
+           // debug(arr[i]);
+            cout<<"NO"<<endl;
+            return;
+        }
+        sum+=arr[i];
+    }
+    cout<<"YES"<<endl;
 }
 /* logic ends */
 
@@ -53,8 +69,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

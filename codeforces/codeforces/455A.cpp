@@ -35,6 +35,9 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
+int f(int n,vector<int>&arr){
+
+}
 
 /* write core logic here */
 void solve(){
@@ -42,7 +45,16 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    map<int,int>mp;
+    for(int i=0;i<n;i++){
+        mp[arr[i]]++;
+    }
+    int ans[150000];
+    ans[1]=mp[1];
+    for(int i=2;i<100001;i++){
+        ans[i]=max(ans[i-1],(i*mp[i])+ans[i-2]);
+    }
+    cout<<ans[100000]<<endl;
 }
 /* logic ends */
 

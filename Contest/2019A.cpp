@@ -42,7 +42,45 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    int odd = -1;
+    int eve =-1;
+  
+    for(int i=0;i<n;i++){
+        if(i%2==0){
+            odd = max(odd, arr[i]);
+        }
+        else{
+            eve = max(eve,arr[i]);
+        }
+    }
+   // debug(eve);
+  //  debug(odd);
+    if(n%2==0){
+        if(eve>=odd){
+            cout<<((n/2)+eve)<<endl;
+            return ;
+        }
+        else{
+            cout<<((n/2)+odd)<<endl;
+            return ;
+        }
+    }
+    else{
+        if(odd>=eve){
+            cout<<(((n+1)/2)+odd)<<endl;
+            return ;
+        }
+        else{
+            if(eve-odd>=2){
+                cout<<(((n-1)/2)+eve)<<endl;
+                return ;
+            }
+            else{
+                cout<<(((n+1)/2)+odd)<<endl;
+                return;
+            }
+        }
+    }
 }
 /* logic ends */
 
@@ -53,8 +91,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

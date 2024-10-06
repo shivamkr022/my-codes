@@ -40,9 +40,9 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    int ans = n +(sqrtl(n) + 0.5);
+    debug(sqrtl(n));
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -53,8 +53,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

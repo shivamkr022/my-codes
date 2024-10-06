@@ -42,7 +42,22 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005];    
+    int mm=-1;
+    int cnt=0;
+    for(int ele :arr){
+        mm = max(mm,ele);
+    }
+    bool flag=true;
+    for(int i=0;i<n;i++){
+        if(arr[i]==1 and arr[i+1]==0) flag=false;
+    }
+
+    if(mm>2 or flag==false){
+        cout<<"NO"<<endl;
+        return;
+    }
+    cout<<"YES"<<endl;
+
 }
 /* logic ends */
 
