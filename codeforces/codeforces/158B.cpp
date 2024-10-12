@@ -54,16 +54,40 @@ void solve(){
         if(arr[i]==2) two++;
         if(arr[i]==3) three++;
         if(arr[i]==4) ff++;
-        if(arr[i]!=4) sum+=arr[i];
-
     }
-    int rem =0;
-    if(one>=three){
-        rem = one-three;
+    int tt= two/2;
+    int  rtt = two%2;
+    int tro=0;  // couple one and three makes
+    int ro=0;   // rem ones
+    int rt=0;   // rem threes
+    int ott =0;  // cal one and two couples
+    int frem =0;
+    if(one=three){
+        tro = three;
+    }
+    else if(one>three){
+        tro=three;
+        ro=one - three;
     }
     else{
-        
+        tro=one;
+        rt = three-one;
     }
+    if(rtt=ro){
+        ott = ro;
+    }
+    else if(rtt>ro){
+        ott=ro;
+        frem=rtt-ro;
+    }
+    else{
+        ott=rtt;
+        frem=ro-rtt;
+    }
+    debug(tt);
+    debug(ott);
+    int ans = ff+tro+ott+tt+frem;
+    cout<<ans<<endl;
 
 }
 /* logic ends */

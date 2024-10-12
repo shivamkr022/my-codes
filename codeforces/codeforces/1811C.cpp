@@ -40,10 +40,18 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    vector<int>arr(n-1);
+    for(int i=0;i<n-1;i++) cin>>arr[i];
+    vector<int>ans;
+    ans.push_back(arr[0]);
+    for(int i = 0; i < n - 2; i++){
+        ans.push_back(min(arr[i], arr[i + 1]));
+    }
+    ans.push_back(arr[n - 2]);
+    for(int ele : ans){
+      cout <<ele<<" ";
+    }
+    cout <<endl;
 }
 /* logic ends */
 
@@ -54,8 +62,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

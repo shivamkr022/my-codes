@@ -40,10 +40,21 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
+    int idx[n];
     vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    for(int i=1;i<=n;i++){
+        int ele;
+        cin>>ele;
+        idx[ele]=i;
+    }
+    if(idx[n] < min(idx[1], idx[2])) {
+        cout << idx[n] <<" "<< min(idx[1], idx[2]) <<endl;
+    } else if(idx[n] > max(idx[1], idx[2])) {
+            cout << idx[n] <<" "<< max(idx[1], idx[2]) <<endl;
+    }
+    else{
+        cout << idx[1] <<" "<< idx[2] <<endl;
+   }
 }
 /* logic ends */
 
@@ -54,8 +65,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

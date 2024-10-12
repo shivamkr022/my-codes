@@ -42,8 +42,21 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    priority_queue<int>pq;  // priority queue  // by def its max heap
+    int ans =0;
+    for(int i=0;i<n;i++){
+        if(arr[i]==0){
+            if(pq.size()>0){
+                ans+=pq.top();
+                pq.pop();
+            }
+        }
+        else{
+            pq.push(arr[i]);
+        }
+    } 
+    cout<<ans<<endl;
+
 }
 /* logic ends */
 
@@ -54,8 +67,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

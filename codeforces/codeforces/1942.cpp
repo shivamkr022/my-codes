@@ -42,8 +42,7 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    vector<int>ans(n),temp(n+1);
 }
 /* logic ends */
 

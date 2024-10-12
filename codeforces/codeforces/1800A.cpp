@@ -40,10 +40,24 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    string s;
+    cin>>s;
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    if(s[0]!='m' or s[n-1]!='w'){
+        cout<<"NO"<<endl;
+        return ;
+    }
+    string str="";
+    for(int i=0;i<n;i++){
+        if(s[i]!=s[i+1]){
+            str+=s[i];
+        }
+    }
+    if(str!="meow"){
+    cout<<"NO"<<endl;
+      return;
+    }
+    cout<<"YES"<<endl;
 }
 /* logic ends */
 
@@ -54,8 +68,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

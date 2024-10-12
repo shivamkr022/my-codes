@@ -40,10 +40,23 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    int x = 2*n-2;
+    string s;
+    cin>>s;
+    int ans =0;
+    map<char,int>mp;
+    for(int i=0;i<x;i++){
+        if((int)s[i] <=122 and (int)s[i]>=97){
+            mp[s[i]]++;
+        }
+        else if(((int)s[i] <=90 and (int)s[i]>=65) and mp[tolower(s[i])]>0){
+            mp[tolower(s[i])]--;
+        }
+        else{
+            ans++;
+        }
+    }
+    cout<<ans<<endl;
 }
 /* logic ends */
 

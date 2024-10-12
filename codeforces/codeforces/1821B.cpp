@@ -39,11 +39,32 @@ using namespace std;
 /* write core logic here */
 void solve(){
     int n;
-    cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int dp[1000005]; 
-      
+    cin >> n;
+
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) cin >> arr[i];
+
+    vector<int> brr(n);
+    for (int i = 0; i < n; i++) cin >> brr[i];
+
+    int start = -1, end = -1;  // Initialize to -1 to signify no mismatch found initially
+    int i = 0;
+    int j = n - 1;
+
+	for(int j = 0; j < n; j++){
+		if(arr[j] != brr[j]){
+			end = j;
+			if(start == -1)
+			 start = j;
+		}
+	}
+
+    while(start > 0 && brr[start - 1] <= brr[start])
+			start--;
+	while(end < n - 1 && brr[end + 1] >= brr[end])
+			end++;
+
+    cout << (start+1) << " " << (end+1)<< endl;
 }
 /* logic ends */
 
@@ -54,8 +75,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }
