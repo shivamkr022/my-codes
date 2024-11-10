@@ -38,7 +38,20 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n,x;
+    cin>>n>>x;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    sort(arr.begin(),arr.end());
+    int sum=0;
+    for(int i=0;i<n;i++){
+        sum+=arr[i];
+    }
+   sort(arr.begin(),arr.end());
+   int tt = arr[n-1];
+   int ans  = (sum+x-1)/x;
+   ans = max(ans,tt);
+   cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -49,8 +62,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

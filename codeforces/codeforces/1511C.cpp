@@ -38,7 +38,30 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n,q;
+    cin>>n>>q;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    map<int,int>mp;
+    for(int i=0;i<n;i++){
+        if(mp[arr[i]]==0){
+        mp[arr[i]]=i+1;
+        }
+    }
+    while(q--){
+        int k;
+        cin>>k;
+        int match = mp[k];
+        cout <<mp[k]<<" ";
+        mp.erase(k);
+        for(auto ele :mp){
+            if(ele.second<match){
+                mp[ele.first]=ele.second+1;
+            }
+        }
+        mp[k]=1;
+    }
+    cout<<endl;
 }
 /* logic ends */
 

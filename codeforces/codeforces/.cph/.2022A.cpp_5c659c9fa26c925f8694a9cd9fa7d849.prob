@@ -1,0 +1,1 @@
+{"name":"Local: 2022A","url":"s:\\coding\\codeforces\\codeforces\\2022A.cpp","tests":[{"id":1728988528047,"input":"4\n3 3\n2 3 1\n3 3\n2 2 2\n4 5\n1 1 2 2\n4 5\n3 1 1 3\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\2022A.cpp","group":"local","local":true}

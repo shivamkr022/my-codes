@@ -38,7 +38,27 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n;
+    cin>>n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    for(int i=(n % 2);i<n-1;i+=2) {
+        if(a[i] > a[i + 1]) {
+            swap(a[i], a[i + 1]);
+            print(a); 
+        }
+    }
+   // print(a);     
+    bool sorted = true;
+    for(int i = 1; i < n; i++) {
+        if (a[i - 1] > a[i]) {
+            sorted = false;
+            break;
+        }
+    }
+    cout << (sorted ? "YES" : "NO") << endl;
 }
 /* logic ends */
 
@@ -49,8 +69,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

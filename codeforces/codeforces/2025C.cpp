@@ -38,7 +38,22 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n,k;
+    cin>>n>>k;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    sort(arr.begin(),arr.end());
+
+    int ans =0;
+   // print(arr);// 4 4 4 4 4 5 5 6 6
+    for(int i=0,rt=0;i<n;i++){
+        rt = max(rt,i+1);
+       while(rt<n and abs(arr[rt]-arr[i])<k and abs(arr[rt]-arr[rt-1])<2){
+           rt++;
+       }
+       ans=max(ans,rt-i);
+    }
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -49,8 +64,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

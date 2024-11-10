@@ -38,7 +38,14 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int l,r,k;
+    cin>>l>>r>>k;
+    int count = 0;
+    while(l<=r){
+        l*=k;
+        count++;
+    }
+    cout<<count<<endl;
 }
 /* logic ends */
 
@@ -49,8 +56,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

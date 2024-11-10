@@ -38,7 +38,30 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    string s,t;
+    cin>>s>>t;
+    int n = s.length();
+    int m = t.length();
+    int ans =0;
+    for(int i=0;i<min(n,m);i++){
+        if(s[i]==t[i]){
+            ans++;
+        }
+        else{
+            break;
+        }
+    }
+    debug(ans);
+    if(ans==0){
+        cout<<(n+m)<<endl;
+        return;
+    }
+    int xx = ans+1;
+    int maxii = max(n,m);
+    int rem1 = n-ans;
+    int rem2 = m-ans;
+    debug(rem1);
+    cout<<(rem1+xx+rem2)<<endl;
 }
 /* logic ends */
 
@@ -49,8 +72,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+   // t = 1;
     while(t--){
         solve();
     }

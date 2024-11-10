@@ -38,7 +38,43 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+ int n;
+    cin>>n;
+    string str = to_string(n);
+    int last = 0;
+    string a = "";
+    string b = "";
+
+    for(int i = 0; i<str.size(); i++){
+        char ch = str[i];
+        int xx = ch - '0';
+        int half = xx / 2;
+        if(xx & 1){
+            if(last == 0){
+                a += to_string(half + 1);
+                last ^= 1; 
+                b += to_string(half);
+            }
+            else{
+                b += to_string(half + 1);
+                last ^= 1;
+                a += to_string(half);
+            }
+        }
+        else{
+            a += to_string(half);
+            b += to_string(half);
+        }
+    }
+    int aa = 0;
+    int bb = 0;
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+    for(int i = 0; i<a.size(); i++){
+        aa += (a[i] - '0') * pow(10,i);
+        bb += (b[i] - '0') * pow(10,i);
+    }
+    cout<<aa<<" "<<bb<<endl;
 }
 /* logic ends */
 
@@ -49,8 +85,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

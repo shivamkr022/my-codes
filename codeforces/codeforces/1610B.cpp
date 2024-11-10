@@ -38,7 +38,25 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    bool flag = true;
+    int i=0;
+    int j=n-1;
+    while(i<=j){
+        if(arr[i]!=arr[j]){
+            flag=false;
+            return;
+        }
+        else{
+            i++;
+            j--;
+        }
+    }
+    if(flag) cout<<"YES"<<endl;
+    else cout <<"NO"<<endl;
 }
 /* logic ends */
 
@@ -49,8 +67,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

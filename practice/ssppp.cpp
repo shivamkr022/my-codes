@@ -38,7 +38,25 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    vector<int>arr1=arr;
+
+    int count =2;
+    for(int i=0;i<n;i++){
+        if(arr[i]!=i+1 and count!=0){
+            swap(arr[i],arr[arr[i]-1]);
+            count--;
+        }
+    }
+    sort(arr1.begin(),arr1.end());
+    if(arr==arr1){
+        cout<<"YES"<<endl;
+        return ;
+    }
+    cout<<"NO"<<endl;
 }
 /* logic ends */
 
