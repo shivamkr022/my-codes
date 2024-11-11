@@ -38,21 +38,39 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int a,b,c,d;
-    cin>>a>>b>>c>>d;
+    vector<int>v1;
+    vector<int>v2;
+    vector<int>v3;
+    int n;
+    cin>>n;
+    while(n--){
+        int x,y,z;
+        cin>>x>>y>>z;
+    //    vector<int>v;
+        //int ans = x+y+z;
+        v1.push_back(x);
+        v2.push_back(y);
+        v3.push_back(z);
+          //  print(v1);
+    }
 
-    if(a>c && b>d && a>d && b>c){
-        cout<<4<<endl;
+   int sum1 =0;
+   int sum2=0;
+   int sum3=0;
+    for(int i=0;i<v1.size();i++){
+        sum1+=v1[i];
     }
-    else if(((a>c && b>=d ) || (a>=c and b>d)) && ((a>d && b>=c) || (a>=d and b>=c)) ){
-        cout<<4<<endl;
+    for(int i=0;i<v2.size();i++){
+        sum2+=v2[i];
     }
-    else if((a>c && b>=d ) || (a>=c && b>d) || (a>d && b>=c) || (a>=d && b>c)){
-        cout<<2<<endl;
+    for(int i=0;i<v3.size();i++){
+        sum3+=v3[i];
     }
-    else{
-    cout<<0<<endl;
+    if(sum1==0 and sum2==0 and sum3==0){
+        cout<<"YES"<<endl;
+        return;
     }
+    cout<<"NO"<<endl;
 }
 /* logic ends */
 
@@ -63,8 +81,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    cin>>t;
-    //t = 1;
+    //cin>>t;
+    t = 1;
     while(t--){
         solve();
     }

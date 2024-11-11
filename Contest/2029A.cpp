@@ -41,9 +41,19 @@ void solve(){
     int l,r,k;
     cin>>l>>r>>k;
     int count = 0;
+    if(k==1){
+        cout<<(r-l+1)<<endl;
+        return;
+    }
     while(l<=r){
-        l*=k;
-        count++;
+        int ans  = l*k;
+        if(ans<=r){
+            count++;
+            l++;
+        }
+        else{
+            break;
+        }
     }
     cout<<count<<endl;
 }

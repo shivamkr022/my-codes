@@ -38,21 +38,18 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int a,b,c,d;
-    cin>>a>>b>>c>>d;
-
-    if(a>c && b>d && a>d && b>c){
-        cout<<4<<endl;
+    string s;
+    cin>>s;
+    int n = s.length();
+    transform(s.begin(), s.end(), s.begin(), ::tolower); 
+    string ans ="";
+    for(int i=0;i<n;i++){
+        if(s[i]!='a' and s[i]!='e' and s[i]!='i' and s[i]!='o' and s[i]!='u' and s[i]!='y'){
+            ans+='.';
+            ans+=s[i];
+        }
     }
-    else if(((a>c && b>=d ) || (a>=c and b>d)) && ((a>d && b>=c) || (a>=d and b>=c)) ){
-        cout<<4<<endl;
-    }
-    else if((a>c && b>=d ) || (a>=c && b>d) || (a>d && b>=c) || (a>=d && b>c)){
-        cout<<2<<endl;
-    }
-    else{
-    cout<<0<<endl;
-    }
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -63,8 +60,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    cin>>t;
-    //t = 1;
+    //cin>>t;
+    t = 1;
     while(t--){
         solve();
     }

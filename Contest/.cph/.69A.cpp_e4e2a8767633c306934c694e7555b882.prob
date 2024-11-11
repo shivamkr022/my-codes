@@ -1,0 +1,1 @@
+{"name":"Local: 69A","url":"s:\\coding\\Contest\\69A.cpp","tests":[{"id":1731333171734,"input":"3\n0 2 -2\n1 -1 3\n-3 0 0\n","output":""},{"id":1731333184830,"input":"3\n3 -1 7\n-5 2 -4\n2 -1 -3\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\Contest\\69A.cpp","group":"local","local":true}

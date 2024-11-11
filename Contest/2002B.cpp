@@ -40,27 +40,21 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int> alice(n);
-    vector<int> bob(n);
-    
-    int aliceIndex = 0, bobIndex = 0;    
-        for (int i = 0; i < n; ++i) {
-            cin >> alice[i];
-            if (alice[i] == 1) {
-                aliceIndex = i;
-            }
-        } 
-        for (int i = 0; i < n; ++i) {
-            cin >> bob[i];
-            if (bob[i] == 1) {
-                bobIndex = i;
-            }
-        }
-        if (aliceIndex < bobIndex) {
-            cout << "Alice" << endl;
-        } else {
-            cout << "Bob" << endl;
-        }
+    vector<int> a(n);
+    vector<int> b(n);
+    for(int i=0;i<n;i++) cin>>a[i];
+    for(int i=0;i<n;i++) cin>>b[i];
+
+    if (a == b){
+        cout <<"Bob"<<endl;
+        return ;
+    }
+    reverse(a.begin(), a.end());    
+    if(a == b){
+        cout << "Bob"<<endl;
+        return ;
+    }
+    cout << "Alice"<<endl;   
 }
 /* logic ends */
 

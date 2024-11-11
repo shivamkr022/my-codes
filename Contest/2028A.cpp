@@ -38,21 +38,24 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int a,b,c,d;
-    cin>>a>>b>>c>>d;
-
-    if(a>c && b>d && a>d && b>c){
-        cout<<4<<endl;
+    int n,a,b;
+    cin>>n>>a>>b;
+    string s;
+    cin>>s;
+    int x=0;
+    int y=0;
+    
+   for(int i=0;i<1000;i++){  
+    if(s[i%n]=='N')y++;
+    else if(s[i%n]=='E')x++;
+    else if(s[i%n]=='S')y--;
+    else x--;
+    if(x==a and y==b){
+        cout<<"YES"<<endl;
+        return;
     }
-    else if(((a>c && b>=d ) || (a>=c and b>d)) && ((a>d && b>=c) || (a>=d and b>=c)) ){
-        cout<<4<<endl;
-    }
-    else if((a>c && b>=d ) || (a>=c && b>d) || (a>d && b>=c) || (a>=d && b>c)){
-        cout<<2<<endl;
-    }
-    else{
-    cout<<0<<endl;
-    }
+   }
+    cout<<"NO"<<endl;
 }
 /* logic ends */
 
@@ -70,4 +73,3 @@ signed main(){
     }
 return 0;
 }
-
