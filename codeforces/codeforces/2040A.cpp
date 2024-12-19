@@ -38,40 +38,22 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
     vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    int cnt =0;
     for(int i=0;i<n;i++){
-        cin>>arr[i];
+        for(int j=i+1;j<n;j++){
+            if(abs(arr[i]-arr[j])%k!=0){
+                cout<<"YES"<<endl;
+                cout<<i+1<<endl;
+                return;
+
+            }
+        }
     }
-    sort(arr.begin(),arr.end());
-    int q;
-    cin>>q;
-    while(q--){
-        int k;
-        cin>>k;
-        // int lo =0; // we can buy at least l drinks if 
-        // int hi =n-1;
-        // int res =-1;
-
-        // while(lo <= hi){
-        //   int mid = ((lo  + hi) /2);
-
-        //   if(arr[mid] <= k){
-        //     lo  = mid + 1;
-        //     res = mid;
-        //   }
-        //   else hi = mid - 1;
-        // }
-
-        // cout<<res+1<<endl;
-
-
-        int idx = upper_bound(arr.begin(), arr.end(), k) - arr.begin();
-
-        cout<<idx<<endl;
-  }
-
+    cout<<"NO"<<endl;
 }
 /* logic ends */
 
@@ -82,8 +64,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    // cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

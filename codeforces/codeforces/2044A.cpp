@@ -40,38 +40,7 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-    }
-    sort(arr.begin(),arr.end());
-    int q;
-    cin>>q;
-    while(q--){
-        int k;
-        cin>>k;
-        // int lo =0; // we can buy at least l drinks if 
-        // int hi =n-1;
-        // int res =-1;
-
-        // while(lo <= hi){
-        //   int mid = ((lo  + hi) /2);
-
-        //   if(arr[mid] <= k){
-        //     lo  = mid + 1;
-        //     res = mid;
-        //   }
-        //   else hi = mid - 1;
-        // }
-
-        // cout<<res+1<<endl;
-
-
-        int idx = upper_bound(arr.begin(), arr.end(), k) - arr.begin();
-
-        cout<<idx<<endl;
-  }
-
+    cout<<(n-1)<<endl;
 }
 /* logic ends */
 
@@ -82,8 +51,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    // cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
