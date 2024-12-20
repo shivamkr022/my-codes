@@ -1,0 +1,1 @@
+{"name":"Local: 2048B","url":"s:\\coding\\codeforces\\codeforces\\2048B.cpp","tests":[{"id":1734620402059,"input":"3\n4 2\n6 1\n8 3\n","output":""},{"id":1734620860305,"input":"1\n8 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\2048B.cpp","group":"local","local":true}
