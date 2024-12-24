@@ -38,7 +38,28 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n,a,b,c;
+    cin>>n>>a>>b>>c;
+    int qq = (n/(a+b+c));
+    int rem = (n%(a+b+c));
+    int ans1 = 3*qq;
+    if(rem==0){
+        cout<<ans1<<endl;
+        return;
+    }
+    if(rem>0){
+        ans1++;
+        rem-=a;
+    }
+    if(rem>0){
+        ans1++;
+        rem-=b;
+    }
+    if(rem>0){
+        ans1++;
+        rem-=c;
+    }
+    cout<<ans1<<endl;
 }
 /* logic ends */
 
@@ -49,8 +70,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

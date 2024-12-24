@@ -38,7 +38,23 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n;
+    cin>>n;
+    vector<int>a(n);
+    vector<int>b(n);
+    for(int i=0;i<n;i++) cin>>a[i];
+    for(int i=0;i<n;i++) cin>>b[i];
+    int ans =0;
+    if(n==1){
+        cout<<a[0]<<endl;
+        return;
+    }
+    for(int i=1;i<n;i++){
+        if(a[i-1]>b[i]){
+            ans+=(a[i-1]-b[i]);
+        }
+    }
+    cout<<(ans+a[n-1])<<endl;
 }
 /* logic ends */
 
@@ -49,8 +65,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

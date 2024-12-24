@@ -38,7 +38,39 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    
+    int n,m,k;
+    cin>>n>>m>>k;
+    vector<int>arr(m);
+    for(int i=0;i<m;i++) cin>>arr[i];
+    vector<int>qq(k);
+    for(int i=0;i<k;i++) cin>>qq[i];
+
+    string str0(m,'0');
+    string str1(m,'1');
+
+    if((n-1)>k){
+        cout<<str0<<endl;
+        return; 
+    }
+    if((n-1)<k){
+        cout<<str1<<endl;
+        return;
+    }
+    set<int>st;
+    for(int ele :qq){
+        st.insert(ele);
+    }
+    string anss ="";
+    int sz = st.size();
+    for(int i=0;i<m;i++){
+        if(sz==(n-1) and st.find(arr[i]) == st.end()){// not prsent
+        anss+='1';
+        }
+        else{
+            anss+='0';
+        }
+    }
+        cout<<anss<<endl;
 }
 /* logic ends */
 
@@ -49,8 +81,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
