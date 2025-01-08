@@ -38,18 +38,15 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    vector<int>arr;
-    arr.push_back(1);
-    arr.push_back(2);
-    arr.push_back(3);
-    arr.push_back(4);
-    arr.push_back(5);
-    int i=1;
-    while(i<5){
-      if(i==3)break;
-       else cout<<i<<endl;
-       i++;
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
     }
+    for(int i=1;i<n;i++){
+        cout<<(arr[i]+arr[i-1])<<" ";
+    }cout<<arr[n-1]<<endl;
 }
 /* logic ends */
 

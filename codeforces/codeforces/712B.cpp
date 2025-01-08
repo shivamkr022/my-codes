@@ -38,18 +38,29 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    vector<int>arr;
-    arr.push_back(1);
-    arr.push_back(2);
-    arr.push_back(3);
-    arr.push_back(4);
-    arr.push_back(5);
-    int i=1;
-    while(i<5){
-      if(i==3)break;
-       else cout<<i<<endl;
-       i++;
+    string s;
+    cin>>s;
+    int r = 0;
+    int l = 0;
+    int d = 0;
+    int u = 0;
+    for(int i=0;i<s.length();i++){
+        if(s[i]=='R') r++;
+        if(s[i]=='L') l++;
+        if(s[i]=='U') u++;
+        if(s[i]=='D') d++;
     }
+    // debug(r);
+    // debug(l);
+    // debug(u);
+    // debug(d);
+    if(s.length()%2!=0){
+        cout<<-1<<endl;
+        return;
+    }
+    int lr = abs(r-l);
+    int ud = abs(u-d);
+    cout<<(lr+ud)/2<<endl;
 }
 /* logic ends */
 

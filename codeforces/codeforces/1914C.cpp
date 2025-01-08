@@ -38,18 +38,26 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    vector<int>arr;
-    arr.push_back(1);
-    arr.push_back(2);
-    arr.push_back(3);
-    arr.push_back(4);
-    arr.push_back(5);
-    int i=1;
-    while(i<5){
-      if(i==3)break;
-       else cout<<i<<endl;
-       i++;
+    int n,k;
+    cin>>n>>k;
+    vector<int>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
+    vector<int>b(n);
+    for(int i=0;i<n;i++){
+        cin>>b[i];
+    }
+    int ans =0;
+    int mxm = 0;
+    int sum =0;
+    for(int i=0;i<min(n,k);i++){
+        sum += a[i];
+        mxm = max(mxm,b[i]);
+        int store = sum + mxm * (k-i-1);
+        ans = max(ans,store);
+    }
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -60,8 +68,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
