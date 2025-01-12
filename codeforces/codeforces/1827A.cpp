@@ -38,7 +38,20 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    cout<<(240%mod)<<endl;
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for(int i=0; i<n; i++) cin >> arr[i];
+    vector<int> brr(n);
+    for (int i=0; i<n; i++) cin >> brr[i];
+    sort(arr.begin(), arr.end());
+    sort(brr.begin(), brr.end(), greater<>());
+    int ans = 1;
+    for (int i=0; i<n; i++){
+        int temp= arr.size() - (upper_bound(arr.begin(), arr.end(), brr[i])-arr.begin());
+        ans = ans * max(temp - i, 1LL*0) % mod;
+    }
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -49,8 +62,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
