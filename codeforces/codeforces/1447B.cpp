@@ -38,35 +38,32 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    vector<int>brr(n);
-    for(int i=0;i<n;i++) cin>>brr[i];        
-        
-    int store = 0;
-    int idx = 0;
-    for (int i=0; i<n; i++) {
-        if (arr[i] < brr[i] && abs(arr[i] - brr[i]) >= store) {
-            idx = i;
-            store = abs(arr[i] - brr[i]);
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>>arr(n,vector<int>(m));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin>>arr[i][j];
         }
     }
-    bool check = false;
-    for (int i = 0; i < n; i++) {
-        if (i != idx and arr[i]-store < brr[i]){
-            check = true;
-            break;
+    int count =0;
+    int minm = 100;
+    int ans = 0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(arr[i][j]<0){
+                count++;
+            }
+            ans+=abs(arr[i][j]);
+            minm=min(minm,abs(arr[i][j]));
         }
     }
-    if (check){
-        cout <<"NO"<<endl;
-    }
+    if(count & 1){
+            cout<<ans-(2 * minm)<<endl;
+        }
     else{
-         cout <<"YES"<< endl;
+        cout<<ans<<endl;
     }
-
 }
 /* logic ends */
 
