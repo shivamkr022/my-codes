@@ -35,50 +35,45 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
-vector<int> get_best3(const vector<int>& arr) {
-    vector<int> indices = {-1, -1, -1}; // Store indices of the three largest elements
-    for (int i = 0; i < arr.size(); i++) {
-        if (indices[0] == -1 || arr[i] > arr[indices[0]]) {
-            indices[2] = indices[1];
-            indices[1] = indices[0];
-            indices[0] = i;
-        } else if (indices[1] == -1 || arr[i] > arr[indices[1]]) {
-            indices[2] = indices[1];
-            indices[1] = i;
-        } else if (indices[2] == -1 || arr[i] > arr[indices[2]]) {
-            indices[2] = i;
-        }
-    }
-    return indices;
-}
 
 /* write core logic here */
 void solve(){
     int n;
     cin>>n;
-    vector<int>ar(n);
-    for(int i=0;i<n;i++) cin>>ar[i];
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
     vector<int>brr(n);
-    for(int i=0;i<n;i++) cin>>brr[i];
+    for(int i=0;i<n;i++) cin>>brr[i]; // input
     vector<int>crr(n);
     for(int i=0;i<n;i++) cin>>crr[i];
 
-    int ans =0;
-    vector<int> best_a = get_best3(ar);
-    vector<int> best_b = get_best3(brr);
-    vector<int> best_c = get_best3(crr);
+    vector<pair<int,int>>a;
+    vector<pair<int,int>>b;
+    vector<pair<int,int>>c;
+    for(int i=0;i<n;i++){       // storing crr ele with their index
+        a.push_back({arr[i],i});
+    }
+    for(int i=0;i<n;i++){ 
+        b.push_back({brr[i],i});     // storing brr ele with their index
+    }
+    for(int i=0;i<n;i++){
+        c.push_back({crr[i],i});       // storing crr ele with their index
+    }
+    sort(a.begin(),a.end(),greater<>());
+    sort(b.begin(),b.end(),greater<>());
+    sort(c.begin(),c.end(),greater<>());
 
-    for (int i : best_a) {
-        for (int j : best_b) {
-            for (int k : best_c) {
-                if (i != j && j != k && k != i) {
-                    int sum = ar[i] + brr[j] + crr[k];
-                    ans = max(ans, sum); 
+    int ans =0;
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            for(int k=0;k<3;k++){
+                if(a[i].second!=b[j].second and b[j].second!=c[k].second and c[k].second!=a[i].second){
+                    ans=max(ans,a[i].first+b[j].first+c[k].first);
                 }
             }
         }
     }
-    cout << ans << endl;
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -96,3 +91,4 @@ signed main(){
     }
 return 0;
 }
+
