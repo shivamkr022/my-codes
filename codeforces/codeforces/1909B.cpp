@@ -40,13 +40,13 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
+    vector<int>arr(n); 
     for(int i=0;i<n;i++) cin>>arr[i];
     int ans =0;
     for(int i=2;i<3e18;i*=2){
         set<int>s;
         for(int j=0;j<n;j++){
-        s.insert(arr[j]%i);
+        s.insert(arr[j]%i);                 //// a solid observation
         if(s.size()>3) break;
        }
     if(s.size()==2){
