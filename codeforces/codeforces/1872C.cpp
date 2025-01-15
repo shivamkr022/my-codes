@@ -36,18 +36,27 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
+int mindiv(int x){
+    for(int k=2;k<=sqrt(x);k++){
+        if(x%k==0){
+            return k;
+        }
+    }
+    return x;
+}
 /* write core logic here */
 void solve(){
-    string s;
-    cin>>s;
-    s = '#' + s;
-    int n = s.length() - 1;
-    int cnt = 0;
-    for (int i = 1;i + i <= n;++i)
-        if (s[i] != s[n - i + 1])
-            ++cnt;
-    if ((cnt <= 1 && (n&1)) || cnt == 1) puts("YES");
-    else puts("NO");
+    int l,r;
+    cin>>l>>r;
+    bool flag = true;
+    for(int i=l;i<=r;i++){
+        int xx = mindiv(i);
+        if(xx!=i){
+            cout<<xx<<" "<<(i-xx)<<" "<<endl;
+            return;
+        }
+    }
+    cout<<-1<<endl;
 }
 /* logic ends */
 
@@ -58,8 +67,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
