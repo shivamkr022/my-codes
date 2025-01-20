@@ -38,16 +38,28 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    sort(arr.begin(),arr.end());
-    int xx = *lower_bound(arr.begin(),arr.end(),6);
-    int yy = upper_bound(arr.begin(),arr.end(),1)-arr.begin();
-    cout<<xx<<endl;
-    cout<<yy<<endl;
-
+    int n, q;
+    cin >> n >> q; 
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    vector<int> pre(n + 1, 0); 
+    for (int i = 1; i <= n; i++) {
+        pre[i] = pre[i - 1] + arr[i - 1];
+    }
+    vector<int> prefmax(n);
+    prefmax[0] = arr[0];
+    for (int i = 1; i < n; i++) {
+        prefmax[i] = max(prefmax[i - 1], arr[i]);
+    }
+    for(int i = 0; i < q; i++){
+        int k;
+        cin >> k;
+        int ind = upper_bound(prefmax.begin(), prefmax.end(), k) - prefmax.begin();
+        cout << pre[ind] << " "; 
+    }
+    cout << endl;
 }
 /* logic ends */
 
@@ -58,8 +70,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
