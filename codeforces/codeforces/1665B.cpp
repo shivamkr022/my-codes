@@ -41,19 +41,24 @@ void solve(){
     int n;
     cin>>n;
     vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    int ans =0;
+    set<int>s;
     for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            if(__gcd(arr[i],arr[j])==1){     /// brute force hehehhehe
-                ans = max(ans,(i+j+2));
-            }
-        }
+        int ele;
+        cin>>ele;
+        s.insert(ele);
     }
-    if(ans!=0)
-    cout<<ans<<endl;
-    else cout<<-1<<endl;
-
+    if(s.size()==1){
+        cout<<0<<endl;
+        return;
+    }
+    if(s.size()%2==0){
+        cout<<s.size()+1<<endl;
+        return;
+    }
+    if(s.size()%2!=0){
+        cout<<s.size()+2<<endl;
+        return;
+    }
 }
 /* logic ends */
 
