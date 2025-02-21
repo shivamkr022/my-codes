@@ -1,0 +1,1 @@
+{"name":"Local: 313B","url":"s:\\coding\\codeforces\\codeforces\\313B.cpp","tests":[{"id":1740127562236,"input":"......\n4\n3 4\n2 3\n1 6\n2 6\n","output":""},{"id":1740127615810,"input":"#..###\n5\n1 3\n5 6\n1 5\n3 6\n3 4\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\313B.cpp","group":"local","local":true}
