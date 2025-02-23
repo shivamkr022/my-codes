@@ -1,0 +1,1 @@
+{"name":"Local: 450A","url":"s:\\coding\\codeforces\\codeforces\\450A.cpp","tests":[{"id":1740293533522,"input":"5 2\n1 3 1 4 2\n","output":""},{"id":1740293550013,"input":"6 4\n1 1 2 2 3 3\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\450A.cpp","group":"local","local":true}
