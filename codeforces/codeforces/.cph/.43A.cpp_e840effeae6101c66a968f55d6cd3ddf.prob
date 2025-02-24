@@ -1,0 +1,1 @@
+{"name":"Local: 43A","url":"s:\\coding\\codeforces\\codeforces\\43A.cpp","tests":[{"id":1740382045532,"input":"5\nA\nABA\nABA\nA\nA\n","output":""},{"id":1740382212685,"input":"4\na\nb\nb\nc","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\43A.cpp","group":"local","local":true}
