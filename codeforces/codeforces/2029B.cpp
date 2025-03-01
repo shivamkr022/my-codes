@@ -40,14 +40,20 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    if(n%2==0){
-    cout<<2<<" "<<(n-3)<<" "<<1<<endl;
+    string s,t;
+    cin>>s>>t;
+    int n1= t.length();
+    int cnt0 = count(s.begin(),s.end(),'0');
+    int cnt1 = n-cnt0;
+    for(int i=0;i<n-1;i++){
+        if(cnt0==0 or cnt1==0){
+            cout<<"NO"<<endl;
+            return;
+        }
+		if (t[i] == '1') cnt0--;
+		else cnt1--;
     }
-    else{
-      int cur=(n-1)/2;
-      if (cur%2==0) cout<<cur-1<<" "<<cur+1<<" "<<1<<endl;
-      else cout<<cur-2<<" "<<cur+2<<" "<<1<<endl;
-    }
+    cout<<"YES"<<endl;
 }
 /* logic ends */
 
