@@ -1,68 +1,70 @@
-/*
-  ------------------------------------------
- |                                        |
- |      Code Crafted by Shivam     |
- |                                        |
-  ------------------------------------------
-    \        ,     ,        /
-      \      |     |      /
-         \   \_/   /
-           \  -----  /
-             \_/
-  
-  Happy coding! 
-*/
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
-/* includes and all */
-
-#include<bits/stdc++.h>
-#ifndef ONLINE_JUDGE
-#define debug(x) cout<<"errr----  "<< #x <<" " <<x<<endl 
-#define print(v) do { \
-                    cout << "vect--" << #v << " = [ "; \
-                    for (int i = 0; i < v.size(); i++) { \
-                        cout << v[i] << " "; \
-                    } \
-                    cout << " ]" << endl; \
-                } while(0)
-#else
-#define debug(x)
-#define print(v)
-#endif
-#define endl "\n"
-#define int long long int
-#define mod 1000000007
-#define mn(a,b,c) min(a,min(b,c))
-#define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
-/* write core logic here */
-void solve(){
-    int n;
-    cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    sort(arr.begin(),arr.end());
-    int xx = *lower_bound(arr.begin(),arr.end(),6);
-    int yy = upper_bound(arr.begin(),arr.end(),1)-arr.begin();
-    cout<<xx<<endl;
-    cout<<yy<<endl;
-
-}
-/* logic ends */
-
-signed main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    #ifndef ONLINE_JUDGE
-        freopen("Error.txt" , "w" , stderr);
-    #endif
+void solve() {
     int t;
-    //cin>>t;
-    t = 1;
-    while(t--){
-        solve();
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<long long> b(2 * n);
+        for (int i = 0; i < 2 * n; ++i) {
+            cin >> b[i];
+        }
+
+        // Sort b to make it easier to handle
+        sort(b.begin(), b.end());
+
+        // Try to find the missing element
+        long long missing = -1;
+        for (int i = 0; i <= 2 * n; ++i) {
+            // Construct a candidate for a
+            vector<long long> a;
+            int idx = 0;
+            for (int j = 0; j <= 2 * n; ++j) {
+                if (j == i) {
+                    a.push_back(0); // Placeholder for missing element
+                } else {
+                    a.push_back(b[idx++]);
+                }
+            }
+
+            // Calculate the alternating sum
+            long long sum = a[1];
+            for (int j = 2; j < 2 * n + 1; ++j) {
+                if (j % 2 == 0) {
+                    sum -= a[j];
+                } else {
+                    sum += a[j];
+                }
+            }
+
+            // Check if the sum matches a[0]
+            if (sum == a[0]) {
+                missing = a[i];
+                break;
+            }
+        }
+
+        // Reconstruct a with the missing element
+        vector<long long> a;
+        a.push_back(missing);
+        for (int i = 0; i < 2 * n; ++i) {
+            a.push_back(b[i]);
+        }
+
+        // Output the sequence a
+        for (int i = 0; i < 2 * n + 1; ++i) {
+            cout << a[i] << " ";
+        }
+        cout << endl;
     }
-return 0;
 }
 
+int main() {
+    solve();
+    return 0;
+}
