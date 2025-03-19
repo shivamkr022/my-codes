@@ -17,23 +17,32 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
+int f(int num){
+    int sum=0;
+    while(num>0){
+    sum+=num%10;
+    num=num/10;
+    }
+    return sum;
+}
 void solve(){
-    int n;
-    cin>>n;
     string s;
     cin>>s;
-    int s1 = stoi(s);
-
-    int x=0;
-    int y=0;
-    for(int i=0;i<n;i++){
-
-
-   if(x==y) cout<<"yes"<<endl;
-    else cout<<"no"<<endl;
+    int n=s.length();
+    string fi = s.substr(0, n / 2);     
+    string se = s.substr(n / 2, n / 2); 
+    int ff = stoi(fi);
+    int ss = stoi(se);
+    int d1=f(ff);
+    int d2=f(ss);
+    if(d1==d2){
+        cout<<"YES"<<endl;
     }
-
-    
+    else{
+        cout<<"NO"<<endl;
+    }
+    // debug(fi);
+    // debug(se);
 }
 int32_t main(){
     ios_base::sync_with_stdio(false);
@@ -42,8 +51,8 @@ int32_t main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
