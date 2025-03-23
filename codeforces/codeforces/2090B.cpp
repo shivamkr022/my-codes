@@ -35,10 +35,42 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
-
+bool fn(int n, int m, vector<string>& grid) {
+    vector<string> str(n, string(m, '0'));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == '1') {
+                str[i][j] = '1';
+            } else {
+                break; 
+            }
+        }
+    }
+    for (int j = 0; j < m; j++) {
+        for (int i = 0; i < n; i++) {
+            if (grid[i][j] == '1') {
+                str[i][j] = '1';
+            } else {
+                break; 
+            }
+        }
+    }
+    return str == grid;
+}
 /* write core logic here */
 void solve(){
-cout<<1/2<<endl;
+    int n, m;
+    cin >> n >> m;
+    vector<string> grid(n);
+    for (int i = 0; i < n; i++) {
+        cin >> grid[i];
+    }
+    if (fn(n, m, grid)) {
+        cout << "YES" << endl;
+    }
+    else {
+        cout << "NO" << endl;
+    } 
 }
 /* logic ends */
 
@@ -49,8 +81,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }

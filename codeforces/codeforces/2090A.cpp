@@ -38,7 +38,21 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-cout<<1/2<<endl;
+    int x,y,a;
+    cin>>x>>y>>a;
+    int k = (x+y);
+    int rem = a%k;
+    if(rem==0){
+        cout<<"NO"<<endl;
+    }
+    else{
+        if(rem>=x){
+            cout<<"YES"<<endl;
+        }
+        else{
+            cout<<"NO"<<endl;
+        }
+    }
 }
 /* logic ends */
 
@@ -49,8 +63,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
