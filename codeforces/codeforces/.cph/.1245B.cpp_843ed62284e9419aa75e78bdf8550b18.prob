@@ -1,0 +1,1 @@
+{"name":"Local: 1245B","url":"s:\\coding\\codeforces\\codeforces\\1245B.cpp","tests":[{"id":1742798040158,"input":"2\n3\n1 1 1\nRPS\n3\n3 0 0\nRPS\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\1245B.cpp","group":"local","local":true}
