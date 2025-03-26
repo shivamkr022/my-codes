@@ -39,17 +39,23 @@ using namespace std;
 /* write core logic here */
 void solve(){
     int n;
-    cin>>n;
-    vector<int>ans;
-    for(int i=0;i<n;i++){
-        ans.push_back(i+1);
+    cin >> n;
+    vector<int> l = {0, 0, 0, 1, 2, 2, 3, 5};
+    vector<int> l1(n);
+    for (int i = 0; i < n; i++) {
+        cin >> l1[i];
     }
-    ans[0]=1;
-    ans[1]=1;
-    ans[n-1]=1;
-    for(int ele : ans){
-        cout<<ele<<" ";
-    }cout<<endl;
+    for (int i = 0; i < n; i++) {
+        auto it = find(l.begin(), l.end(), l1[i]);
+        if (it != l.end()) {
+            l.erase(it); 
+        }
+        if (l.empty()) {
+            cout << (i + 1) << endl;
+            return;
+        }
+    }
+    cout << 0 << endl;
 }
 /* logic ends */
 
@@ -61,7 +67,7 @@ signed main(){
     #endif
     int t;
     cin>>t;
-    //t = 1;
+   // t = 1;
     while(t--){
         solve();
     }

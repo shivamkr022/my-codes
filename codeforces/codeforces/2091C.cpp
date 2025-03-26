@@ -40,15 +40,15 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>ans;
-    for(int i=0;i<n;i++){
-        ans.push_back(i+1);
+    if(n%2==0){
+        cout<<-1<<endl;
+        return;
     }
-    ans[0]=1;
-    ans[1]=1;
-    ans[n-1]=1;
-    for(int ele : ans){
-        cout<<ele<<" ";
+    for(int i=1;i<=n;i+=2){
+        cout<<i<<" ";
+    }
+    for(int i=2;i<=n;i+=2){
+        cout<<i<<" ";
     }cout<<endl;
 }
 /* logic ends */

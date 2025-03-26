@@ -1,16 +1,6 @@
 /*
-  ------------------------------------------
- |                                        |
- |      Code Crafted by Shivam     |
- |                                        |
-  ------------------------------------------
-    \        ,     ,        /
-      \      |     |      /
-         \   \_/   /
-           \  -----  /
-             \_/
-  
-  Happy coding! 
+**  Compete against Yourself.
+**  Author - Shivam kumar
 */
 
 /* includes and all */
@@ -32,24 +22,29 @@
 #define endl "\n"
 #define int long long int
 #define mod 1000000007
+int po(int a,int b) {if(b==0) return 1; if(b==1) return a; if(b%2==0) {int u=po(a,b/2);return (u*1LL*u)%mod;} else {int u=po(a,b-1);return (a*1LL*u)%mod;}}
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
+#define all(x) (x).begin(),(x).end()
 using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
-    vector<int>ans;
+    int n,x;
+    cin>>n>>x;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    int ans =0;
+    sort(arr.rbegin(),arr.rend());
+    int s=0;
     for(int i=0;i<n;i++){
-        ans.push_back(i+1);
+        s++;
+        if(s*arr[i]>=x){
+            ans++;
+            s=0;
+        }
     }
-    ans[0]=1;
-    ans[1]=1;
-    ans[n-1]=1;
-    for(int ele : ans){
-        cout<<ele<<" ";
-    }cout<<endl;
+    cout<<ans<<endl;
 }
 /* logic ends */
 
@@ -67,4 +62,3 @@ signed main(){
     }
 return 0;
 }
-

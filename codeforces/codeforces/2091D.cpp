@@ -38,18 +38,11 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n;
-    cin>>n;
-    vector<int>ans;
-    for(int i=0;i<n;i++){
-        ans.push_back(i+1);
-    }
-    ans[0]=1;
-    ans[1]=1;
-    ans[n-1]=1;
-    for(int ele : ans){
-        cout<<ele<<" ";
-    }cout<<endl;
+    int n,m,k;
+    cin>>n>>m>>k;
+    int total=(n*m-k)/n;
+    int kena=m-total;
+    cout<<(int)ceil((float)kena/(float)(total+1))<<endl;
 }
 /* logic ends */
 
