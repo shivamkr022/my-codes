@@ -40,19 +40,14 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    string str;
-    cin>>str;
-    vector<int> cnt(26);
-	for (char ch : str) {
-		cnt[ch - 'a'] += 1;
-	}
-	int mx = *max_element(cnt.begin(),cnt.end());
-	if (2 * mx >= n) {
-		cout << 2 * mx - n << endl;
-	}
-    else {
-		cout << n % 2 << endl;
-	}
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    sort(arr.begin(),arr.end());
+    for(int i=0;i<n;i++){
+        if(i%2==0) cout<<arr[n/2+i/2]<<" ";
+        else cout<<arr[n/2-(i+1)/2]<<" ";
+    }
+    cout << endl;
 }
 /* logic ends */
 

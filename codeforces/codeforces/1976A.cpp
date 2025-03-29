@@ -35,24 +35,25 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
-
+bool isSortedByAscii(const string &s) {
+    for (size_t i = 1; i < s.length(); i++) {
+        if (s[i] < s[i - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
 /* write core logic here */
 void solve(){
     int n;
     cin>>n;
-    string str;
-    cin>>str;
-    vector<int> cnt(26);
-	for (char ch : str) {
-		cnt[ch - 'a'] += 1;
-	}
-	int mx = *max_element(cnt.begin(),cnt.end());
-	if (2 * mx >= n) {
-		cout << 2 * mx - n << endl;
-	}
-    else {
-		cout << n % 2 << endl;
-	}
+    string s;
+    cin >> s;
+    if (isSortedByAscii(s)) {
+        cout <<"YES"<<endl;
+    } else {
+        cout << "NO" <<endl;
+    }
 }
 /* logic ends */
 

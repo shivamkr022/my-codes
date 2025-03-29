@@ -40,19 +40,36 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    string str;
-    cin>>str;
-    vector<int> cnt(26);
-	for (char ch : str) {
-		cnt[ch - 'a'] += 1;
-	}
-	int mx = *max_element(cnt.begin(),cnt.end());
-	if (2 * mx >= n) {
-		cout << 2 * mx - n << endl;
-	}
-    else {
-		cout << n % 2 << endl;
-	}
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    int k = n+1;
+    vector<int>brr(k);
+    for(int i=0;i<k;i++) cin>>brr[i];
+    int xx = brr[k-1];
+    int ans =0;
+    for(int i=0;i<n;i++){
+        ans+=abs(arr[i]-brr[i]);
+    }
+   // debug(xx);
+    bool flag = false;
+    for(int i=0;i<n;i++){
+        if((arr[i]>=xx and brr[i]<=xx) or (arr[i]<=xx and brr[i]>=xx) ){
+            flag = true;
+            break;
+        }
+    }
+    if(flag){
+        cout<<(ans+1)<<endl;
+        return;
+    }
+    int ss =1e18;
+    for(int i=0;i<n;i++){
+        ss=min(ss,abs(xx-arr[i]));
+        ss=min(ss,abs(xx-brr[i]));
+    }
+    // debug(ans);
+    // debug(ss);
+    cout<<(ans+ss+1)<<endl;
 }
 /* logic ends */
 
@@ -70,4 +87,3 @@ signed main(){
     }
 return 0;
 }
-
