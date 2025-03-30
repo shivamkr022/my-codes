@@ -40,15 +40,11 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    string s;
-    cin >> s;
-    int ans =0;
-    for(int i=0;i<n-1;i++){
-        if(s[i]==s[i+1]){
-            ans++;
-        }
-    }
-    cout<<(ans+1)/2<<endl;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    int x = *min_element(arr.begin(),arr.end());
+    int y = *max_element(arr.begin(),arr.end());
+    cout<<abs(x-y)<<endl;
 }
 /* logic ends */
 
@@ -60,7 +56,7 @@ signed main(){
     #endif
     int t;
     cin>>t;
-    //t = 1;
+   // t = 1;
     while(t--){
         solve();
     }
