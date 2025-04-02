@@ -38,30 +38,7 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int n, k;
-    cin >> n >> k;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    if (n == k) {
-        arr.push_back(0);
-        arr.push_back(0); 
-        for (int i = 1; i <= n; i++) { 
-            int index = 2 * i - 1; 
-            if (arr[index] != i) { 
-                cout << i << endl; 
-                return; 
-            }
-        }
-    }
-    for (int i = 1; i < n - (k - 2); i++) {
-        if (arr[i] != 1) {
-            cout <<1<< endl;
-            return;
-        }
-    }
-    cout <<2<<endl;
+    cout<<"puzzling"<<endl;
 }
 /* logic ends */
 
@@ -72,8 +49,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    cin>>t;
-   // t = 1;
+    //cin>>t;
+    t = 1;
     while(t--){
         solve();
     }
