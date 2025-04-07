@@ -40,19 +40,16 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    vector<int>arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    vector<int> dp(n);
-    dp[0] = 0; 
-    if (n >= 2){
-        dp[1] = abs(arr[1] - arr[0]);/// dp[i] signifies minm cost to reach till ith index from 0
+    vector<int>dp(n+1);
+    dp[0]=0;
+    dp[1]=1;
+    for(int i=2;i<=n;i++){
+        dp[i]=dp[i-1]+dp[i-2];
     }
-    for (int i = 2; i < n; i++) { // 0 based indexing
-        dp[i] = min(dp[i - 1] + abs(arr[i] - arr[i - 1]),dp[i - 2] + abs(arr[i] - arr[i - 2]));
-    }
-    cout << dp[n - 1] << endl;    // 0 based indexing
+    cout<<dp[n]<<endl;
 }
 /* logic ends */
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
