@@ -38,15 +38,9 @@ using namespace std;
 
 /* write core logic here */
 void solve(){
-    int X;
-    cin>>X;
-    int jumps=0;
-    while (X > 0)
-    X -= ++jumps;
-    if (X == -1)
-    jumps++;
-
-cout << jumps << '\n';
+    int n,m;
+    cin>>n>>m;
+    cout<<(n-1)<<" "<<m<<endl;
 }
 /* logic ends */
 
