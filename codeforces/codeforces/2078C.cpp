@@ -50,14 +50,10 @@ void solve(){
 
     vector<int> a(2 * n + 1);
     int sum = 0;
-
-    // Fill odd indices with the smallest (n-1) values
     for (int i = 0; i < n - 1; i++) {
         a[2 * i + 1] = b[i];
         sum -= b[i];
     }
-
-    // Fill even indices with the largest (n+1) values
     for (int i = 0; i < n + 1; i++) {
         a[2 * i] = b[n - 1 + i];
         sum += b[n - 1 + i];
