@@ -35,6 +35,7 @@ int main(){
         if(mp.find(rem)!=mp.end()){    // rem is present
           ans.push_back(mp[rem]);  // mp[rem] -> rem ka index
           ans.push_back(i);
+          break;
         } 
         else mp[nums[i]]=i; // mp[nums[i]]->key , i->value
       }
