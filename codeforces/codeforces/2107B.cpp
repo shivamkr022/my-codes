@@ -48,7 +48,7 @@ void solve(){
     sort(arr.begin(), arr.end());
     
     if (arr[n - 1] - arr[0] > k || sum % 2 == 0){
-        cout << "Jerry\n";
+        cout << "Jerry" <<endl;
         return;
     }
     cout << "Tom" <<endl;
@@ -62,8 +62,8 @@ signed main(){
         freopen("Error.txt" , "w" , stderr);
     #endif
     int t;
-    //cin>>t;
-    t = 1;
+    cin>>t;
+    //t = 1;
     while(t--){
         solve();
     }
