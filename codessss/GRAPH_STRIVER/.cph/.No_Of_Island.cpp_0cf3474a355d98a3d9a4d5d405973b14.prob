@@ -1,0 +1,1 @@
+{"name":"Local: No_Of_Island","url":"s:\\coding\\codessss\\GRAPH_STRIVER\\No_Of_Island.cpp","tests":[{"id":1746799714623,"input":"5 8\n########\n#..#...#\n####.#.#\n#..#...#\n########","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codessss\\GRAPH_STRIVER\\No_Of_Island.cpp","group":"local","local":true}
