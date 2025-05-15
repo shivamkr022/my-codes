@@ -51,10 +51,11 @@ using namespace std;
         }
         return false ;
     }
+    
 /* write core logic here */
 void solve(){
     //------>>> INPUT:
-}
+} 
 /* logic ends */
 
 signed main(){
