@@ -39,7 +39,6 @@ using namespace std;
 bool check_cycle_DFS_dir(int node, vector<vector<int>> &adj, vector<int>& vis, vector<int>& pathvis) {
       vis[node] = 1;
       pathvis[node] = 1;
-
       for (auto nbr : adj[node]) {
           if (!vis[nbr]) {
               if (check_cycle_DFS_dir(nbr, adj, vis, pathvis)) {
@@ -50,7 +49,6 @@ bool check_cycle_DFS_dir(int node, vector<vector<int>> &adj, vector<int>& vis, v
               return true; // Back edge found, cycle exists
           }
       }
-
       pathvis[node] = 0; // Backtrack
       return false;
   }
@@ -62,7 +60,6 @@ bool check_cycle_DFS_dir(int node, vector<vector<int>> &adj, vector<int>& vis, v
           int v = ele[1];
           adj[u].push_back(v);  // Directed edge: u → v
       }
-
       vector<int> vis(n, 0), pathvis(n, 0);
       for (int i = 0; i < n; i++) {
           if (!vis[i]) {
@@ -71,7 +68,6 @@ bool check_cycle_DFS_dir(int node, vector<vector<int>> &adj, vector<int>& vis, v
               }
           }
       }
-
       return false;
   }
 
