@@ -35,42 +35,40 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
-   
-           /// KAHN'S ALGO OR BFS TOPO 
-
+/// TOPOLOGICAL SORT
+  void dfs(int node ,vector<vector<int>>&adj,vector<int>&vis,stack<int>&st){
+      vis[node]=1;
+      for(auto nbr : adj[node]){
+          if(!vis[nbr]){
+            dfs(nbr,adj,vis,st);  // call dfs
+          }
+      }
+      st.push(node);   // if its get visited just push to stack
+  }
     bool topoSort(int n, vector<vector<int>>& edges) {
         vector<vector<int>>adj(n);
-        vector<int>indegree(n,0); 
         for(auto ele : edges){    /// Adjacency List
             int u = ele[0];
-            int v = ele[1];      /// directed graph
+            int v = ele[1];      /// durected graph
             adj[u].push_back(v);
-            indegree[v]++;
         }
-        queue<int>q;
-        for(int i=0;i<n;i++){
-            if(indegree[i]==0){  // already indeg =0 means it can be put in start of the ans
-                q.push(i);
+        vector<int>vis(n,0);
+        stack<int>st;
+        for(int i=0;i<n;i++){  // start from node 0->N
+            if(!vis[i]){
+                dfs(i,adj,vis,st);
             }
         }
-        vector<int>topo;
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-            topo.push_back(node);
-            
-            for(auto nbr : adj[node]){
-                indegree[nbr]--;
-                if(indegree[nbr]==0){
-                    q.push(nbr);
-                }
-            }
+        vector<int>ans;
+        while(!st.empty()){  // storing ans in vector
+            ans.push_back(st.top());
+            st.pop();
         }
-        if(topo.size()==n){
-            return false;
+        if(ans.size()==n){
+            return true;
         }
         else{
-            return true ;
+            return false;
         }
     }
 /* write core logic here */
