@@ -35,10 +35,8 @@
 #define mn(a,b,c) min(a,min(b,c))
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
-   
-           /// KAHN'S ALGO OR BFS TOPO 
 
-    bool topoSort(int n, vector<vector<int>>& edges) {
+ bool canFinish(int n, vector<vector<int>>& edges) {
         vector<vector<int>>adj(n);
         vector<int>indegree(n,0); 
         for(auto ele : edges){    /// Adjacency List
@@ -73,11 +71,10 @@ using namespace std;
             return false ;
         }
     }
+    
 /* write core logic here */
 void solve(){
-
-    /// INPUT
-    
+    ///--->>> INPUT
 }
 /* logic ends */
 
