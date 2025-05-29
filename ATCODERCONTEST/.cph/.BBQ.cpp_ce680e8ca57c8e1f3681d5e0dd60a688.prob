@@ -1,1 +1,0 @@
-{"name":"Local: BBQ","url":"s:\\coding\\ATCODERCONTEST\\BBQ.cpp","tests":[{"id":1745770426527,"input":"5\n100 1 2 3 14 15 58 58 58 29\n","output":""},{"id":1745770594494,"input":"2\n1 3 1 2\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\ATCODERCONTEST\\BBQ.cpp","group":"local","local":true}
