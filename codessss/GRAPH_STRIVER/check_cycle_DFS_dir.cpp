@@ -47,9 +47,12 @@ bool check_cycle_DFS_dir(int node, vector<vector<int>> &adj, vector<int>& vis, v
           }
           else if (pathvis[nbr]) {
               return true; // Back edge found, cycle exists
+    // We have reached a node that is already on the current DFS path.
+    // This means there is a back edge from 'node' to 'nbr',
+    // indicating a cycle in the directed graph
           }
       }
-      pathvis[node] = 0; // Backtrack
+      pathvis[node] = 0; // Backtrack  // mark all path again 0 so next path can be traversed to hceck cycle from other path
       return false;
   }
 
