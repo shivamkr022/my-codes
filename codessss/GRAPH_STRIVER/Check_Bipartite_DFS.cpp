@@ -39,7 +39,7 @@ using namespace std;
     // Helper function to perform DFS and color nodes
     bool check_bipartite_DFS(int node, vector<vector<int>> &adj, vector<int> &color) {
         for (int nbr : adj[node]) {
-            if (color[nbr] == -1) {
+            if (color[nbr] == -1) {   // it means its not visited
                 color[nbr] = !color[node]; // Assign opposite color
                 if (!check_bipartite_DFS(nbr, adj, color)) {
                     return false;

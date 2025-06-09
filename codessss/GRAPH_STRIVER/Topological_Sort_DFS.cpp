@@ -37,7 +37,7 @@
 using namespace std;
 
 /// TOPOLOGICAL SORT
-  void dfs(int node ,vector<vector<int>>&adj,vector<int>&vis,stack<int>&st){
+  void dfs(int node , vector<vector<int>>&adj , vector<int>&vis , stack<int>&st ){
       vis[node]=1;
       for(auto nbr : adj[node]){
           if(!vis[nbr]){
@@ -46,11 +46,13 @@ using namespace std;
       }
       st.push(node);   // if its get visited just push to stack
   }
-    vector<int> topoSort(int n, vector<vector<int>>& edges) {
+
+  /// Main function
+  vector<int> topoSort(int n, vector<vector<int>>& edges) {
         vector<vector<int>>adj(n);
         for(auto ele : edges){    /// Adjacency List
             int u = ele[0];
-            int v = ele[1];      /// durected graph
+            int v = ele[1];      /// directed graph
             adj[u].push_back(v);
         }
         vector<int>vis(n,0);
