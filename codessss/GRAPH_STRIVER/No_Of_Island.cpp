@@ -93,3 +93,48 @@ signed main(){
 return 0;
 }
 
+//  BFS SOLUTION
+
+    // void bfs(int row, int col, vector<vector<char>>& grid, vector<vector<bool>>& vis) {
+    //     int n = grid.size();
+    //     int m = grid[0].size();
+    //     queue<pair<int, int>> q;
+    //     q.push({row, col});
+    //     vis[row][col] = true;
+
+    //     // directions: up, down, left, right
+    //     int dx[] = {-1, 1, 0, 0};
+    //     int dy[] = {0, 0, -1, 1};
+
+    //     while (!q.empty()) {
+    //         auto [x, y] = q.front(); q.pop();
+
+    //         for (int d = 0; d < 4; d++) {
+    //             int nx = x + dx[d];
+    //             int ny = y + dy[d];
+
+    //             if (nx >= 0 && ny >= 0 && nx < n && ny < m &&
+    //                 !vis[nx][ny] && grid[nx][ny] == '1') {
+    //                 vis[nx][ny] = true;
+    //                 q.push({nx, ny});
+    //             }
+    //         }
+    //     }
+    // }
+
+    // int numIslands(vector<vector<char>>& grid) {
+    //     int n = grid.size();
+    //     int m = grid[0].size();
+    //     vector<vector<bool>> vis(n, vector<bool>(m, false));
+    //     int islands = 0;
+
+    //     for (int i = 0; i < n; i++) {
+    //         for (int j = 0; j < m; j++) {
+    //             if (grid[i][j] == '1' && !vis[i][j]) {
+    //                 islands++;
+    //                 bfs(i, j, grid, vis);
+    //             }
+    //         }
+    //     }
+    //     return islands;
+    // }
