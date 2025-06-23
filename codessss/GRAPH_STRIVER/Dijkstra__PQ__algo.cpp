@@ -36,82 +36,80 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
-/*
-🔷 STEPS FOR DIJKSTRA’S ALGORITHM 🔷
+// Dijkstra with path reconstruction
+vector<int> dijkstra_with_path(int n, vector<vector<int>> &edges, int src, int dest) {
+    vector<pair<int, int>> adj[n + 1]; // 1-based indexing
 
-1️⃣ Build the graph:
-    - Represent the graph using an adjacency list.
-    - Each node stores pairs: {adjacent_node, weight}.
+    // Build undirected adjacency list
+    for (auto &edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int wt = edge[2];
+        adj[u].push_back({v, wt});
+        adj[v].push_back({u, wt}); // for undirected
+    }
 
-2️⃣ Initialize distance array:
-    - Create a distance array `dis[]` of size `n` and initialize all values as `INF`.
-    - Set the source node distance as 0: `dis[src] = 0`.
+    vector<int> dis(n + 1, 1e18), parent(n + 1);
+    for (int i = 1; i <= n; i++) parent[i] = i;
 
-3️⃣ Create a min-heap priority queue:
-    - It stores pairs: {distance_so_far, current_node}.
-    - Initialize it with the source node: pq.push({0, src}).
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    dis[src] = 0;
+    pq.push({0, src});
 
-4️⃣ Start the Dijkstra loop:
-    - While the priority queue is not empty:
-        a) Extract the top (minimum distance) element.
-        b) For all adjacent nodes:
-            i)   Calculate new distance = current_distance + edge_weight.
-            ii)  If new distance < dis[adj_node], update it.
-            iii) Push the updated {new_distance, adj_node} into the PQ.
+    while (!pq.empty()) {
+        int curr_dis = pq.top().first;
+        int node = pq.top().second;
+        pq.pop();
 
-5️⃣ Once the loop ends:
-    - The `dis[]` array now holds the shortest distances from `src` to all other nodes.
+        if (curr_dis > dis[node]) continue; // skip outdated entries
 
-6️⃣ Return the `dis[]` array as the result.
+        for (auto nbr : adj[node]) {
+            int adj_node = nbr.first;
+            int edge_wt = nbr.second;
 
-⏱️ Time Complexity:
-    - O((E + V) * logV), where:
-        - V is the number of vertices,
-        - E is the number of edges,
-        - logV from priority queue operations.
-
-✅ Most efficient for sparse graphs using: Min-Heap + Adjacency List.
-*/
-
-
-   // // // DIJKSTRA ALGORITHM
-
- vector<int> dijkstra(int n, vector<vector<int>> &edges, int src) {
-        
-     vector<pair<int, int>> adj[n];
-        for (auto &edge : edges) {
-            int u = edge[0];          // adj list weighted
-            int v = edge[1];
-            int wt = edge[2];
-            adj[u].push_back({v, wt});
-        }
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;  // min heap
-        
-        vector<int>dis(n,INT_MAX); // init all dis node with infinity
-        dis[src] = 0;
-        pq.push({0,src}); // it stores {dis ,Node} -> dis till node src -> src will chnage acc to node
-        
-        while(!pq.empty()){
-            int curr_dis = pq.top().first;  // curr dis from src to that node
-            int node  =  pq.top().second;   // that node 
-            pq.pop();  // it wil travesre all its nbr so delete this
-            
-            for (auto nbr : adj[node]){  // traversal start
-                int edg_wt = nbr.second;   // curr edge wt
-                int adj_node = nbr.first;  // node where we are going 
-                
-                if(curr_dis + edg_wt < dis[adj_node]){ // new short path
-                    dis[adj_node]  = curr_dis + edg_wt ; // update dis
-                    pq.push({dis[adj_node],adj_node});  // push to pq
-                }
+            if (curr_dis + edge_wt < dis[adj_node]) {
+                dis[adj_node] = curr_dis + edge_wt;
+                parent[adj_node] = node;
+                pq.push({dis[adj_node], adj_node});
             }
         }
-        return dis ;
     }
+
+    if (dis[dest] == 1e18) return {}; // no path exists
+
+    // Reconstruct path
+    vector<int> path;
+    int curr = dest;
+    while (curr != parent[curr]) {
+        path.push_back(curr);
+        curr = parent[curr];
+    }
+    path.push_back(src);
+    reverse(path.begin(), path.end());
+    return path;
+}
 
 /* write core logic here */
 void solve(){
-    
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> edges;
+    edges.reserve(m);
+
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        edges.push_back({u, v, w});
+    }
+
+    vector<int> path = dijkstra_with_path(n, edges, 1, n);
+    if (path.empty()) {
+        cout << -1 << endl;
+    }
+    else {
+        for (int node : path) cout << node << " ";
+        cout << endl;
+    }
 }
 /* logic ends */
 
@@ -127,6 +125,5 @@ signed main(){
     while(t--){
         solve();
     }
-return 0;
+    return 0;
 }
-
