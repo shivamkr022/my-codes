@@ -41,7 +41,7 @@ using namespace std;
         vis[node] = 1;
         for(auto nbr_node : arr[node]){
             if(!vis[nbr_node]){
-               if(dfs_detect_cycle(nbr_node,node,arr,vis)==true){
+               if(dfs_detect_cycle(nbr_node,node,arr,vis)==true){ // here node became PN 
                    return true;
                } 
             }
