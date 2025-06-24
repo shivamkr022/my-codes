@@ -96,6 +96,7 @@ vector<int> dijkstra(int n, vector<vector<int>> &edges, int src) {
             int curr_node = pq.top().second;
             // now we traverse on curr_ node so pop it from pq
             pq.pop();
+            
             for(auto nbr : adj[curr_node]){
                 int edg_wt = nbr.second;
                 int adj_node = nbr.first;
@@ -108,6 +109,8 @@ vector<int> dijkstra(int n, vector<vector<int>> &edges, int src) {
         return dis ;
    }
 void solve(){
+
+    // --->>>> INPUT
     
 }
 /* logic ends */
