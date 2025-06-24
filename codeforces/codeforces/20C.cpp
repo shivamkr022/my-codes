@@ -1,7 +1,7 @@
 /*
   ------------------------------------------
  |                                        |
- |      Code Crafted by Shivam            |
+ |      Code Crafted by Shivam     |
  |                                        |
   ------------------------------------------
     \        ,     ,        /
@@ -9,94 +9,121 @@
          \   \_/   /
            \  -----  /
              \_/
-
-  Happy coding!
+  
+  Happy coding! 
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-using pii = pair<long long, int>;
-const long long INF = LLONG_MAX;
+/* includes and all */
 
-// -------------------------------- Dijkstra with Path Reconstruction --------------------------------
+#include<bits/stdc++.h>
+#ifndef ONLINE_JUDGE
+#define debug(x) cout<<"errr----  "<< #x <<" " <<x<<endl 
+#define print(v) do { \
+                    cout << "vect--" << #v << " = [ "; \
+                    for (int i = 0; i < v.size(); i++) { \
+                        cout << v[i] << " "; \
+                    } \
+                    cout << " ]" << endl; \
+                } while(0)
+#else
+#define debug(x)
+#define print(v)
+#endif
+#define endl "\n"
+#define int long long int
+#define mod 1000000007
+#define mn(a,b,c) min(a,min(b,c))
+#define mx(a,b,c) max(a,max(b,c))
+using namespace std;
+
+// Dijkstra with path reconstruction
 vector<int> dijkstra_with_path(int n, vector<vector<int>> &edges, int src, int dest) {
-    vector<vector<pii>> adj(n);
-    for (auto &e : edges) {
-        int u = e[0], v = e[1], w = e[2];
-        adj[u].push_back({v, w});
-        adj[v].push_back({u, w}); // undirected
+    vector<pair<int, int>> adj[n + 1]; // 1-based indexing
+
+    // Build undirected adjacency list
+    for (auto &edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int wt = edge[2];
+        adj[u].push_back({v, wt});
+        adj[v].push_back({u, wt}); // for undirected
     }
 
-    // Step 1: Initialize distances and parent array
-    vector<long long> dist(n, INF);
-    vector<int> parent(n, -1);
-    dist[src] = 0;
-    parent[src] = src;
+    vector<int> dis(n + 1, 1e18), parent(n + 1);
+    for (int i = 1; i <= n; i++) parent[i] = i;
 
-    // Step 2: Min-heap priority queue {distance, node}
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    dis[src] = 0;
     pq.push({0, src});
 
-    // Step 3: Dijkstra's algorithm
     while (!pq.empty()) {
-        auto [d, u] = pq.top(); pq.pop();
-        if (d > dist[u]) continue; // outdated entry
-        if (u == dest) break;      // early stopping when reaching dest
+        int curr_dis = pq.top().first;
+        int node = pq.top().second;
+        pq.pop();
 
-        for (auto [v, w] : adj[u]) {
-            if (d + w < dist[v]) {
-                dist[v] = d + w;
-                parent[v] = u;
-                pq.push({dist[v], v});
+        if (curr_dis > dis[node]) continue; // skip outdated entries
+
+        for (auto nbr : adj[node]) {
+            int adj_node = nbr.first;
+            int edge_wt = nbr.second;
+
+            if (curr_dis + edge_wt < dis[adj_node]) {
+                dis[adj_node] = curr_dis + edge_wt;
+                parent[adj_node] = node;
+                pq.push({dis[adj_node], adj_node});
             }
         }
     }
 
-    // Step 4: Reconstruct path from dest to src
-    if (dist[dest] == INF) return {}; // no path found
+    if (dis[dest] == 1e18) return {}; // no path exists
 
+    // Reconstruct path
     vector<int> path;
-    for (int cur = dest; cur != src; cur = parent[cur]) {
-        path.push_back(cur);
+    int curr = dest;
+    while (curr != parent[curr]) {
+        path.push_back(curr);
+        curr = parent[curr];
     }
     path.push_back(src);
     reverse(path.begin(), path.end());
     return path;
 }
-// ---------------------------------------------------------------------------------------------------------
 
+/* write core logic here */
 void solve(){
     int n, m;
     cin >> n >> m;
     vector<vector<int>> edges;
     edges.reserve(m);
 
-    // Read all edges (1-based input → convert to 0-based)
-    for (int i = 0; i < m; i++){
+    for (int i = 0; i < m; i++) {
         int u, v, w;
         cin >> u >> v >> w;
-        --u; --v;
         edges.push_back({u, v, w});
     }
 
-    // Run Dijkstra from vertex 1 (0) to vertex n (n-1)
-    vector<int> path = dijkstra_with_path(n, edges, 0, n - 1);
-
+    vector<int> path = dijkstra_with_path(n, edges, 1, n);
     if (path.empty()) {
-        cout << -1 << "\n";
-    } else {
-        for (int node : path) {
-            cout << (node + 1) << " "; // convert back to 1-based
-        }
-        cout << "\n";
+        cout << -1 << endl;
+    }
+    else {
+        for (int node : path) cout << node << " ";
+        cout << endl;
     }
 }
+/* logic ends */
 
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    solve();
-
+signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    #ifndef ONLINE_JUDGE
+        freopen("Error.txt" , "w" , stderr);
+    #endif
+    int t;
+    //cin>>t;
+    t = 1;
+    while(t--){
+        solve();
+    }
     return 0;
 }
