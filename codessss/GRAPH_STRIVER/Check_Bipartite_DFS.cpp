@@ -45,12 +45,13 @@ using namespace std;
                     return false;
                 }
             }
-            else if (color[nbr] == color[node]) {
+            else if (color[nbr] == color[node]) {  // its adj color are same 
                 return false; // Adjacent node has same color → not bipartite
             }
         }
         return true;
     }
+
     bool isBipartite(int V, vector<vector<int>> &edges) {
         // Step 1: Build adjacency list
         vector<vector<int>> adj(V);
