@@ -150,24 +150,24 @@ vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
 
 /* write core logic here */
 void solve(){
-    // int n, m;
-    // cin >> n >> m;
-    // vector<vector<int>> edges;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> edges;
 
-    // for (int i = 0; i < m; i++) {
-    //     int u, v, w;
-    //     cin >> u >> v >> w;            // INPUT
-    //     edges.push_back({u, v, w});
-    // }
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;            // INPUT
+        edges.push_back({u, v, w});
+    }
 
-    // vector<int> path = shortestPath(n, m, edges);
-    // if (path.size() == 1 && path[0] == -1) {
-    //     cout << -1 << endl;
-    // }
-    // else {
-    //     for (int node : path) cout << node << " ";
-    //     cout << endl;
-    // }
+    vector<int> path = shortestPath(n, m, edges);
+    if (path.size() == 1 && path[0] == -1) {
+        cout << -1 << endl;
+    }
+    else {
+        for (int node : path) cout << node << " ";
+        cout << endl;
+    }
 }
 /* logic ends */
 
