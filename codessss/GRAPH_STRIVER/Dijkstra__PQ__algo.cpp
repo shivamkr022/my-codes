@@ -37,6 +37,21 @@
 using namespace std;
 
 /*
+🔷 WHEN TO USE DIJKSTRA’S ALGORITHM 🔷
+
+✅ Use Dijkstra when:
+1️⃣ You are asked to find the **shortest path** from a **single source** to all nodes (or to one destination).
+2️⃣ All edge weights are **non-negative** (i.e., ≥ 0).
+3️⃣ The graph is either **undirected** or **directed**.
+4️⃣ You want an efficient solution for **sparse graphs** using priority queue + adjacency list.
+
+❌ Don't use Dijkstra if:
+- The graph has **negative weight edges** ➝ use **Bellman-Ford** instead.
+- You need to find **all-pairs shortest paths** ➝ use **Floyd-Warshall**.
+- The graph is **unweighted** ➝ use **BFS** for shortest path.
+
+---
+
 🔷 STEPS FOR DIJKSTRA’S ALGORITHM 🔷
 
 1️⃣ Build the graph:
@@ -64,6 +79,8 @@ using namespace std;
 
 6️⃣ Return the `dis[]` array as the result.
 
+---
+
 ⏱️ Time Complexity:
     - O((E + V) * logV), where:
         - V is the number of vertices,
@@ -73,7 +90,6 @@ using namespace std;
 ✅ Most efficient for sparse graphs using: Min-Heap + Adjacency List.
 */
 
-/* write core logic here */
 
          // CODE LOGIC
 
