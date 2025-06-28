@@ -37,10 +37,8 @@ using namespace std;
 void dfs(int row, int col, vector<string>& grid, vector<vector<int>>& vis, int& cnt) {
     
     if (cnt <= 0) return; // stop when we've kept required cells
-
     vis[row][col] = 1;
     cnt--;
-
     int n = grid.size();
     int m = grid[0].size();
 
@@ -61,21 +59,17 @@ void dfs(int row, int col, vector<string>& grid, vector<vector<int>>& vis, int& 
 void solve() {
     int n, m, k;
     cin >> n >> m >> k;
-
     vector<string> grid(n);
     for (int i = 0; i < n; i++) {
         cin >> grid[i];
     }
-
     int total_empty = 0;
     for (int i = 0; i < n; i++) {
         for (char ch : grid[i]) {
             if (ch == '.') total_empty++;
         }
     }
-
     int cnt = total_empty - k; // we only keep cnt cells as reachable
-
     vector<vector<int>> vis(n, vector<int>(m, 0));
 
     bool started = false;
@@ -87,7 +81,6 @@ void solve() {
             }
         }
     }
-
     // Convert all unvisited '.' to 'X'
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
@@ -96,7 +89,6 @@ void solve() {
             }
         }
     }
-
     for (string row : grid) {
         cout << row << '\n';
     }
