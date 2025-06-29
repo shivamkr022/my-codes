@@ -45,6 +45,8 @@ using namespace std;
                    return true;
                } 
             }
+            
+            // cycle found here
             else if(nbr_node!= par_node){  // its visted but not a parent node means cycle;
                 return true;
             }
