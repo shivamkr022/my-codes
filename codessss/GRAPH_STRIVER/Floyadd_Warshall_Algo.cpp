@@ -77,6 +77,13 @@ void floydWarshall(vector<vector<int>> &dist) {
             }
         }
     }
+ // Step 2: Detect negative cycles
+    for (int i = 0; i < n; ++i) {
+        if (dist[i][i] < 0) {
+            cout << "Negative weight cycle detected involving node " << i << endl;
+            // Optional: handle it (e.g., stop, return a flag, etc.)
+        }
+    }
 }
 
 /* write core logic here */
