@@ -96,7 +96,8 @@ public:
         if (size[ult_par_u] > size[ult_par_v]) {
             parent[ult_par_v] = ult_par_u;
             size[ult_par_u] += size[ult_par_v];
-        } else {
+        }
+        else {
             parent[ult_par_u] = ult_par_v;
             size[ult_par_v] += size[ult_par_u];
         }
