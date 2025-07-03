@@ -15,46 +15,6 @@
 
 /* includes and all */
 
-/*
-  🔍 What this code does:
-  -------------------------
-  ✅ Implements Kruskal's Algorithm to find the Minimum Spanning Tree (MST)
-  ✅ Uses Disjoint Set (Union-Find) with:
-     - Path Compression for fast find()
-     - Union by Size for efficient union()
-  ✅ Time complexity: O(M log M) where M = number of edges
-
-  🧠 Why this order of functions in Disjoint Set?
-  ------------------------------------------------
-  1. Constructor:
-     - Initializes each node's parent as itself and size as 1
-  2. find_par():
-     - Finds the ultimate parent of a node with path compression
-  3. UnionBySize():
-     - Merges two components based on their size
-
-  🛠 Steps of Kruskal's MST:
-  ----------------------------
-  1. Sort all edges by weight
-  2. For each edge:
-     - If nodes belong to different components (i.e., no cycle)
-     - Add the edge to MST and merge the components using DSU
-
-  🐶 Fun analogy (woof woof!):
-  ---------------------------------
-  Think of each node as a dog in a pack 🐕
-  - Every dog starts as its own pack leader
-  - When 2 packs unite, the bigger pack absorbs the smaller
-  - The leader is updated (find_par) so every dog knows the alpha 🐾
-
-  🧩 Perfect for problems involving:
-  - MST (Minimum Spanning Tree)
-  - Connected components
-  - Cycle detection in undirected graphs
-
-  🛡 No adj list needed here — Kruskal works edge-based, not node-based!
-*/
-
 #include<bits/stdc++.h>
 #ifndef ONLINE_JUDGE
 #define debug(x) cout<<"errr----  "<< #x <<" " <<x<<endl 
@@ -89,6 +49,7 @@ public:
             size[i] = 1;     // size of each component is 1
         }
     }
+
     // Path compression: flattens the tree
     int find_par(int node) {
         if (node == parent[node]) {
@@ -96,6 +57,7 @@ public:
         }
         return parent[node] = find_par(parent[node]); // path compressed
     }
+
     // Union by size: attach smaller tree under larger one
     void UnionBySize(int u, int v) {
         int ult_par_u = find_par(u);
@@ -115,33 +77,19 @@ public:
     }
 };
 
-
-class Solution {
-  public:
-    int kruskalsMST(int n, vector<vector<int>> &edges) {
-        
-    sort(edges.begin(), edges.end(), [&](vector<int>& p, vector<int>& q) {
-    return p[2] < q[2]; // sort by weight
-    });
-    
-    DisjointSet ds(n);
-    int mst_wt = 0;
-    for(auto ele : edges){
-        int a = ele[0];
-        int b = ele[1];
-        int wt = ele[2];
-        
-        if(ds.find_par(a) != ds.find_par(b)){
-            mst_wt += wt;
-            ds.UnionBySize(a,b);
-        }
-     }
-     return mst_wt ;
-   }
-};
 /* write core logic here */
 void solve(){
-    
+    int n,m;
+    cin>>n>>m;
+
+    DisjointSet ds(n);
+
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        ds.UnionBySize(u,v);
+
+    }
 }
 /* logic ends */
 

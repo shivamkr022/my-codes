@@ -1,0 +1,1 @@
+{"name":"Local: Flight_Routes_Check","url":"s:\\coding\\cses\\Flight_Routes_Check.cpp","tests":[{"id":1751538931853,"input":"4 5\n1 2\n2 3\n3 1\n1 4\n3 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\cses\\Flight_Routes_Check.cpp","group":"local","local":true}
