@@ -56,7 +56,7 @@ int tarjan(int node, int par, vector<vector<int>> &adj, vector<int>& vis, vector
                 bridge++;
             }
         }
-        else {
+        else{
             lowest_ins_time[node] = min(lowest_ins_time[node], ins_time[nbr]);
         }
     }
