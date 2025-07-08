@@ -70,6 +70,7 @@ public:
 };
 /* write core logic here */
 void solve(){
+    
     // INPUT
     
 }
