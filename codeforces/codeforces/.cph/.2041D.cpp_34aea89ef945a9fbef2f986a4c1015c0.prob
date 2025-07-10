@@ -1,0 +1,1 @@
+{"name":"Local: 2041D","url":"s:\\coding\\codeforces\\codeforces\\2041D.cpp","tests":[{"id":1752080489067,"input":"5 8\n########\n#......#\n#.####.#\n#...T#S#\n########\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\codeforces\\codeforces\\2041D.cpp","group":"local","local":true}
