@@ -80,7 +80,8 @@ private:
                     bridges.push_back({node, nbr});
                 }
 
-            } else {
+            }
+            else {
                 // If already visited and not parent, it's a back edge
                 lowest_ins_time[node] = min(lowest_ins_time[node], ins_time[nbr]);
             }
