@@ -80,7 +80,6 @@ vector<int> bellmanFord(int n, vector<vector<int>>& edges, int src) {
             }
         }
     }
-
     // to check the negative cycle exist or not
     // if neg cycle exist then it update the value in nth relaxation too 
     // nth relaxation
@@ -93,7 +92,6 @@ vector<int> bellmanFord(int n, vector<vector<int>>& edges, int src) {
             return {-1} ;
         }
     }
-
     return dis ;
 }
 

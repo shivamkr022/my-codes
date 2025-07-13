@@ -36,6 +36,38 @@
 #define mx(a,b,c) max(a,max(b,c))
 using namespace std;
 
+/*
+    -------------------- Floyd–Warshall Algorithm --------------------
+    Goal: Find the shortest distance between every pair of nodes.
+    ------------------------------------------------------------------
+    Step 1: Initialize the distance matrix:
+        - dist[i][j] = weight of edge from i to j
+        - If no edge exists between i and j, set dist[i][j] = ∞
+        - dist[i][i] = 0 for all i (distance to self is zero)
+    ------------------------------------------------------------------
+    Step 2: Run the main loop:
+        for each intermediate node via = 0 to n-1:
+            for each source node i = 0 to n-1:
+                for each destination node j = 0 to n-1:
+                    - Check if going through 'via' gives a shorter path:
+                        dist[i][j] = min(dist[i][j], dist[i][via] + dist[via][j])
+                    - Means: can we go from i to j more efficiently through via?
+
+    ------------------------------------------------------------------
+    Step 3: Optional - Detect negative weight cycles:
+        - If dist[i][i] < 0 for any node i, then a negative weight cycle exists
+
+    ------------------------------------------------------------------
+    Properties:
+        - Handles negative weights ✔
+        - Detects negative cycles ✔
+        - All-pairs shortest path ✔
+        - Time Complexity: O(n^3)
+        - Space Complexity: O(n^2)
+    ------------------------------------------------------------------
+    Note: Works for both directed and undirected graphs.
+*/
+
 void floydWarshall(vector<vector<int>> &dist) {
 
     int n = dist.size();           // Number of nodes
@@ -64,7 +96,6 @@ void floydWarshall(vector<vector<int>> &dist) {
             }
         }
     }
-
     /*
         Optional Step:
         If you want to return the result with -1 for unreachable pairs,

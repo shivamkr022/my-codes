@@ -76,7 +76,6 @@ public:
             size[i] = 1;     // size of each component is 1
         }
     }
-
     // Path compression: flattens the tree
     int find_par(int node) {
         if (node == parent[node]) {
@@ -84,7 +83,6 @@ public:
         }
         return parent[node] = find_par(parent[node]); // path compressed
     }
-
     // Union by size: attach smaller tree under larger one
     void UnionBySize(int u, int v) {
         int ult_par_u = find_par(u);
@@ -146,3 +144,32 @@ signed main() {
     }
     return 0;
 }
+/*
+    🐶 WOOF WOOF! Welcome to the doggo camp of DSU by size!
+
+    Imagine each dog is part of a pack (i.e., a set). 
+    Initially, every pupper is alone — a lone wolf! 🐺
+
+    When two dog packs meet:
+    - The SMALLER pack moves into the BIGGER pack’s camp.
+    - Because... why move a big pack when the small one can wag their tails and join in easily?
+
+    Why do we do this?
+    🐾 To keep the barking chain (aka the tree) short!
+    Less barking = faster answers = O(α(n)) time!
+
+    🔄 Operations:
+    - findParent(x): Follow the barking until you find the ALPHA 🐶 of the pack.
+    - unionBySize(u, v): Let the smaller pack's alpha join the bigger one.
+      (size[u_root] < size[v_root] ? swap them!)
+
+    Remember:
+    🔸 Packs like sticking with the bigger gang.
+    🔸 No doggo likes a deep barking tree – too much work!
+    🔸 Less barking = fast union-find magic.
+
+    So next time you do DSU by size, imagine doggo diplomacy:
+    "Hey small pack, join the big bark squad!" 🐶🐶🐶
+
+    Woof woof, DSU complete! ✅
+*/
