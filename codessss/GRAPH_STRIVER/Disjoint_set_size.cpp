@@ -78,7 +78,7 @@ public:
     }
     // Path compression: flattens the tree
     int find_par(int node) {
-        if (node == parent[node]) {
+        if (node == parent[node]) {   // its the root 
             return node;
         }
         return parent[node] = find_par(parent[node]); // path compressed
@@ -88,7 +88,8 @@ public:
         int ult_par_u = find_par(u);
         int ult_par_v = find_par(v);
 
-        if (ult_par_u == ult_par_v) return; // already in same component
+        if (ult_par_u == ult_par_v) return; // already in same component  // cycle detected 
+        // u and v are already connected and also have same par so -> cycle detected 
 
         // Attach smaller size tree under larger one
         if (size[ult_par_u] > size[ult_par_v]) {
