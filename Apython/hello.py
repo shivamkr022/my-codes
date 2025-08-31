@@ -1,2 +1,1 @@
-students =["shivam","kumar"]
-print(students)
+print("hello lol")
