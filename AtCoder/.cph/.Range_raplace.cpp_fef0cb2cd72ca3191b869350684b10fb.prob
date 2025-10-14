@@ -1,0 +1,1 @@
+{"name":"Local: Range_raplace","url":"s:\\coding\\AtCoder\\Range_raplace.cpp","tests":[{"id":1759475553425,"input":"10\n2 5 6 5 2 1 7 9 7 2\n","output":""},{"id":1759475653679,"input":"4\n1 1 2 3\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"s:\\coding\\AtCoder\\Range_raplace.cpp","group":"local","local":true}
