@@ -1,0 +1,225 @@
+import numpy as np
+import pandas as pd
+from scipy.optimize import linprog
+
+# =============================
+# SCRAP COMPOSITION DATABASE (Your Lab Data)
+# =============================
+
+scrap_data = {
+    'Scrap_Type': [
+        'Rim NNE', 'Rim NNE-Remelted', 'Pipe NNE', 'Pipe NNE-Remelted',
+        'Rim Splendour', 'Rim Splendour-Remelted',
+        '6061 Ingot', '6061 Ingot-Remelted',
+        'CAN-Remelted', 'Cu Master Alloy'
+    ],
+    'Si': [0.373,0.331,0.338,0.611,7.747,7.576,0.701,0.665,0.152,0.0],
+    'Fe': [0.205,0.174,0.174,0.164,0.075,0.080,0.843,0.832,0.417,0.0],
+    'Mg': [0.344,0.388,0.394,0.811,0.317,0.320,0.954,0.962,0.979,0.0],
+    'Cu': [0,0,0,0,0,0,0,0,0,50.0],
+    'Mn': [0,0.007,0.007,0.130,0,0,0.888,0.862,0.823,0.0],
+    'Cr': [0.023,0.023,0.023,0.064,0.021,0.022,0.143,0.120,0.031,0.0],
+    'Zn': [0.077,0.074,0.074,0.009,0.005,0.000,0.069,0.064,0.054,0.0],
+    'Ti': [0.018,0.013,0.013,0.023,0.100,0.098,0.055,0.043,0.025,0.0],
+    'Cost': [0.50,0.70,0.60,0.80,1.00,1.10,1.20,1.30,1.40,8.0]
+}
+
+df_scrap = pd.DataFrame(scrap_data).set_index('Scrap_Type')
+elements = ['Si','Fe','Cu','Mn','Mg','Cr','Zn','Ti']
+
+# =============================
+# TARGET ALLOY SPECIFICATIONS (6061 - ASTM B209)
+# =============================
+
+target_specs = {
+    'Si': (0.40, 0.80),
+    'Fe': (0.00, 0.70),
+    'Cu': (0.15, 0.40),
+    'Mn': (0.00, 0.15),
+    'Mg': (0.80, 1.20),
+    'Cr': (0.04, 0.35),
+    'Zn': (0.00, 0.25),
+    'Ti': (0.00, 0.15)
+}
+
+# =============================
+# STEP 1: BEST EFFORT MIX FROM AVAILABLE SCRAPS
+# =============================
+
+def best_effort_mix(target_specs, df_input):
+    n = len(df_input)
+    
+    # Objective: minimize cost
+    c = df_input['Cost'].values
+    
+    # Equality constraint: sum(x_i) = 1
+    A_eq = [np.ones(n)]
+    b_eq = [1.0]
+    
+    # Inequality constraints: lower <= composition <= upper
+    A_ub = []
+    b_ub = []
+    
+    for elem in elements:
+        comp_vec = df_input[elem].values
+        min_val, max_val = target_specs[elem]
+        
+        # Composition >= min_val  →  -comp @ x <= -min_val
+        A_ub.append(-comp_vec)
+        b_ub.append(-min_val)
+        
+        # Composition <= max_val
+        A_ub.append(comp_vec)
+        b_ub.append(max_val)
+    
+    A_ub = np.array(A_ub)
+    b_ub = np.array(b_ub)
+    
+    # Bounds: 0 <= x_i <= 1
+    bounds = [(0, 1)] * n
+    
+    # Solve
+    res = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq,
+                  bounds=bounds, method='highs')
+    
+    if not res.success:
+        return {"status": "failed", "error": res.message}
+    
+    fractions = res.x
+    final_comp = {e: np.dot(df_input[e], fractions) for e in elements}
+    total_cost = res.fun
+    
+    return {
+        "status": "success",
+        "optimal_mix": dict(zip(df_input.index, fractions)),
+        "final_composition": final_comp,
+        "total_cost": total_cost
+    }
+
+# =============================
+# STEP 2: CALCULATE DEFICITS & SURPLUSES
+# =============================
+
+def calculate_deficits(final_comp, target_specs):
+    deficits = {}
+    surpluses = {}
+    for elem in elements:
+        val = final_comp[elem]
+        min_val, max_val = target_specs[elem]
+        
+        if val < min_val:
+            deficits[elem] = min_val - val  # how much we need to add
+        elif val > max_val:
+            surpluses[elem] = val - max_val  # how much we have extra
+        else:
+            deficits[elem] = 0.0
+            surpluses[elem] = 0.0
+    
+    return deficits, surpluses
+
+# =============================
+# STEP 3: COMPENSATE DEFICITS WITH MASTER ALLOYS
+# =============================
+
+def compensate_deficits(deficits, final_comp, target_specs, df_scrap):
+    """
+    Add master alloys to fix deficits.
+    Assumes:
+      - Pure Cu master alloy for Cu deficit
+      - Pure Mg for Mg deficit
+      - Etc. (you can customize)
+    """
+    # Define master alloys (pure elements)
+    master_alloys = {
+        'Cu': {'Cu': 100.0, 'Cost': 8.0},
+        'Mg': {'Mg': 100.0, 'Cost': 5.0},
+        'Si': {'Si': 100.0, 'Cost': 3.0},
+        'Fe': {'Fe': 100.0, 'Cost': 2.0},
+        'Mn': {'Mn': 100.0, 'Cost': 4.0},
+        'Cr': {'Cr': 100.0, 'Cost': 6.0},
+        'Zn': {'Zn': 100.0, 'Cost': 3.5},
+        'Ti': {'Ti': 100.0, 'Cost': 7.0}
+    }
+    
+    # Start with original composition
+    compensated_comp = final_comp.copy()
+    master_additions = {}
+    total_master_cost = 0.0
+    
+    for elem in elements:
+        if deficits[elem] > 0:
+            # Add pure element to fix deficit
+            amount_needed = deficits[elem]
+            master_additions[elem] = amount_needed
+            
+            # Update composition (assume adding small amount doesn't dilute much)
+            compensated_comp[elem] += amount_needed
+            
+            # Add cost
+            total_master_cost += amount_needed * master_alloys[elem]['Cost']
+    
+    return compensated_comp, master_additions, total_master_cost
+
+# =============================
+# RUN THE FULL PROCESS
+# =============================
+
+print("="*80)
+print("🧮 ALUMINUM SCRAP MIXING WITH DEFICIT COMPENSATION")
+print("="*80)
+
+# Step 1: Get best mix from scraps
+result = best_effort_mix(target_specs, df_scrap)
+
+if result["status"] != "success":
+    print(f"❌ Optimization failed: {result['error']}")
+else:
+    print(f"✅ BEST EFFORT MIX FOUND")
+    print(f"💰 Cost (scraps only): ${result['total_cost']:.3f} per kg\n")
+
+    print("📊 Scrap Mix:")
+    for s, f in result["optimal_mix"].items():
+        if f > 0.001:
+            print(f"{s:25s}: {f*100:6.2f}%")
+
+    print("\n🧪 Final Chemistry (before compensation):")
+    for e in elements:
+        val = result["final_composition"][e]
+        min_val, max_val = target_specs[e]
+        status = "✅ OK" if min_val <= val <= max_val else "⚠️ OUT OF SPEC"
+        print(f"{e}: {val:.3f}%  | Spec: {min_val:.2f}–{max_val:.2f} | {status}")
+
+    # Step 2: Calculate deficits
+    deficits, surpluses = calculate_deficits(result["final_composition"], target_specs)
+    
+    print(f"\n📉 Deficits (need to add):")
+    for e, d in deficits.items():
+        if d > 0:
+            print(f"  • {e}: {d:.3f}% deficit")
+    
+    print(f"📈 Surpluses (have extra):")
+    for e, s in surpluses.items():
+        if s > 0:
+            print(f"  • {e}: {s:.3f}% surplus")
+
+    # Step 3: Compensate deficits with master alloys
+    compensated_comp, master_additions, master_cost = compensate_deficits(
+        deficits, result["final_composition"], target_specs, df_scrap
+    )
+
+    print(f"\n🛠️ Master Alloy Additions to Fix Deficits:")
+    for elem, amount in master_additions.items():
+        if amount > 0:
+            print(f"  • Add {amount*100:.2f}% {elem} master alloy")
+
+    print(f"\n🧪 Final Chemistry (after compensation):")
+    for e in elements:
+        val = compensated_comp[e]
+        min_val, max_val = target_specs[e]
+        status = "✅ OK" if min_val <= val <= max_val else "⚠️ OUT OF SPEC"
+        print(f"{e}: {val:.3f}%  | Spec: {min_val:.2f}–{max_val:.2f} | {status}")
+
+    total_cost_with_master = result['total_cost'] + master_cost
+    print(f"\n💰 Total Cost (scraps + master alloys): ${total_cost_with_master:.3f} per kg")
+
+    print(f"\n🎯 Feasible after compensation: {'✅ Yes' if all(d == 0 for d in deficits.values()) else '❌ No'}")

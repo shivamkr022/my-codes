@@ -1,0 +1,135 @@
+import numpy as np
+import pandas as pd
+from scipy.optimize import linprog
+
+# =========================================
+# 1. SCRAP + MASTER ALLOY DATABASE
+# =========================================
+
+scrap_data = {
+    'Scrap_Type': [
+        'Rim NNE', 'Rim NNE-Remelted', 'Pipe NNE',
+        'Rim Splendour', 'Rim Splendour-Remelted',
+        '6061 Ingot', '6061 Ingot-Remelted', 'CAN-Remelted',
+        'Pure Silicon (Si)', 'Pure Magnesium (Mg)', 'Pure Copper (Cu)',
+        'Pure Manganese (Mn)', 'Pure Chromium (Cr)', 'Pure Zinc (Zn)', 'Pure Titanium (Ti)'
+    ],
+
+    'Si': [0.373,0.331,0.338,7.747,7.576,0.701,0.665,0.152,100,0,0,0,0,0,0],
+    'Fe': [0.205,0.174,0.174,0.075,0.080,0.843,0.832,0.417,0,0,0,0,0,0,0],
+    'Mg': [0.344,0.388,0.394,0.317,0.320,0.954,0.962,0.979,0,100,0,0,0,0,0],
+    'Cu': [0,0,0,0,0,0,0,0,0,0,100,0,0,0,0],
+    'Mn': [0,0.007,0.007,0,0,0.888,0.862,0.823,0,0,0,100,0,0,0],
+    'Cr': [0.023,0.023,0.023,0.021,0.022,0.143,0.120,0.031,0,0,0,0,100,0,0],
+    'Zn': [0.077,0.074,0.074,0.005,0.000,0.069,0.064,0.054,0,0,0,0,0,100,0],
+    'Ti': [0.018,0.013,0.013,0.100,0.098,0.055,0.043,0.025,0,0,0,0,0,0,100],
+
+    'Cost': [0.5,0.7,0.6,1.0,1.1,1.2,1.3,1.4,2.5,3.0,8.0,2.0,4.0,3.0,5.0]
+}
+
+df_scrap = pd.DataFrame(scrap_data).set_index("Scrap_Type")
+
+elements = ['Si','Fe','Cu','Mn','Mg','Cr','Zn','Ti']
+
+# =========================================
+# 2. ASTM 6061 TARGET LIMITS
+# =========================================
+
+target_specs = {
+    'Si': (0.40, 0.80),
+    'Fe': (0.00, 0.70),
+    'Cu': (0.15, 0.40),
+    'Mn': (0.00, 0.15),
+    'Mg': (0.80, 1.20),
+    'Cr': (0.04, 0.35),
+    'Zn': (0.00, 0.25),
+    'Ti': (0.00, 0.15)
+}
+
+# =========================================
+# 3. OPTIMIZER WITH FIXED 6061 INGOT
+# =========================================
+
+def optimize_with_fixed_6061(fixed_fraction):
+
+    fixed_scrap = "6061 Ingot"
+    variable_scraps = df_scrap.drop(index=fixed_scrap)
+
+    fixed_comp = df_scrap.loc[fixed_scrap, elements].values * fixed_fraction
+
+    c = variable_scraps["Cost"].values
+    n = len(variable_scraps)
+
+    A_eq = [np.ones(n)]
+    b_eq = [1 - fixed_fraction]
+
+    A_ub = []
+    b_ub = []
+
+    for i, elem in enumerate(elements):
+        comp = variable_scraps[elem].values
+        min_v, max_v = target_specs[elem]
+
+        A_ub.append(-comp)
+        b_ub.append(-(min_v - fixed_comp[i]))
+
+        A_ub.append(comp)
+        b_ub.append(max_v - fixed_comp[i])
+
+    bounds = [(0,1)] * n
+
+    res = linprog(
+        c,
+        A_ub=A_ub,
+        b_ub=b_ub,
+        A_eq=A_eq,
+        b_eq=b_eq,
+        bounds=bounds,
+        method="highs"
+    )
+
+    if not res.success:
+        return {"status":"failed","error":res.message}
+
+    fractions = dict(zip(variable_scraps.index, res.x))
+    fractions[fixed_scrap] = fixed_fraction
+
+    final_comp = {}
+    for e in elements:
+        final_comp[e] = sum(df_scrap.loc[s,e] * f for s,f in fractions.items())
+
+    total_cost = sum(df_scrap.loc[s,"Cost"] * f for s,f in fractions.items())
+
+    return fractions, final_comp, total_cost
+
+# =========================================
+# 4. RUN DIFFERENT SCENARIOS
+# =========================================
+
+for fixed in [0.50, 0.70, 0.90]:
+
+    print("\n" + "="*60)
+    print(f"🔥 FIXED 6061 INGOT = {fixed*100:.0f}%")
+    print("="*60)
+
+    result = optimize_with_fixed_6061(fixed)
+
+    if isinstance(result, dict):
+        print("❌ No feasible solution:", result["error"])
+        continue
+
+    mix, comp, cost = result
+
+    print("\n📦 CHARGE MIX:")
+    for k,v in mix.items():
+        if v > 0.0001:
+            print(f"{k:25s}: {v*100:6.2f}%")
+
+    print(f"\n💰 Total cost: ${cost:.3f} per kg")
+
+    print("\n🧪 FINAL CHEMISTRY:")
+    for e in elements:
+        lo, hi = target_specs[e]
+        val = comp[e]
+        status = "OK" if lo <= val <= hi else "OUT"
+        print(f"{e:2s}: {val:6.3f}% | {lo:.2f}-{hi:.2f} → {status}")
