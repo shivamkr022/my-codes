@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alloy Optimization System</title>
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+/* ===== HEADER ===== */
+.header {
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ===== LAYOUT ===== */
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+    flex: 1;
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* ===== INPUTS ===== */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: none;
+    background: #e5e7eb;
+    color: black;
+}
+
+label {
+    font-size: 14px;
+}
+
+/* ===== BUTTONS ===== */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.run-btn {
+    background: #3b82f6;
+    color: white;
+}
+
+.reset-btn {
+    background: #475569;
+    color: white;
+}
+
+/* ===== TABLE ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: #334155;
+}
+
+td {
+    background: #1e293b;
+}
+
+/* ===== STATUS COLORS ===== */
+.ok { color: #22c55e; }
+.low { color: #f97316; }
+.high { color: #ef4444; }
+
+</style>
+</head>
+
+<body>
+
+<div class="header">⚙️ Alloy Optimization System</div>
+
+<div class="container">
+
+    <!-- INPUT PANEL -->
+    <div class="card">
+        <h3>🔹 Inputs</h3>
+
+        <label>Batch Size (kg)</label>
+        <input id="batch" value="100">
+
+        <label>Ingot %</label>
+        <input id="ingot" value="40">
+
+        <h4>Scrap Quantities (kg)</h4>
+
+        <div id="scrapInputs"></div>
+
+        <button class="run-btn" onclick="run()">Run Optimization</button>
+        <button class="reset-btn" onclick="location.reload()">Reset</button>
+    </div>
+
+    <!-- OUTPUT PANEL -->
+    <div class="card">
+        <h3>📊 Output</h3>
+
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Element</th>
+                    <th>Result</th>
+                    <th>Range</th>
+                    <th>Status</th>
+                    <th>Adjustment</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+
+/* ================= SCRAP LIST ================= */
+const scrapNames = [
+"AA6061-I","AARSNNE","AARSNNE-R","AAPSNNE","AAPSNNE-R",
+"AARSSPL","AARSSPL-R","AA6061-IR","AACAN-R"
+];
+
+/* AUTO CREATE INPUT FIELDS */
+const container = document.getElementById("scrapInputs");
+scrapNames.forEach(name => {
+    container.innerHTML += `
+        <label>${name}</label>
+        <input id="${name}" value="0">
+    `;
+});
+
+/* ================= YOUR LOGIC (UNCHANGED) ================= */
+
+const ELEMENTS = ['Si','Fe','Cu','Mn','Mg','Cr','Zn','Ti'];
+
+const TARGET = {
+Si:[0.4,0.8],Fe:[0,1],Cu:[0,0.4],Mn:[0,1],
+Mg:[0.8,1.2],Cr:[0,0.35],Zn:[0,0.25],Ti:[0,0.15]
+};
+
+const DATA = {
+'AA6061-I':{Si:0.701,Fe:0.843,Cu:0.004,Mn:0.888,Mg:0.954,Cr:0.0009,Zn:0.069,Ti:0.055},
+'AARSNNE':{Si:0.373,Fe:0.205,Cu:0.004,Mn:0.004,Mg:0.344,Cr:0,Zn:0.077,Ti:0.018},
+'AARSNNE-R':{Si:0.339,Fe:0.174,Cu:0.004,Mn:0.006,Mg:0.394,Cr:0,Zn:0.074,Ti:0.013},
+'AAPSNNE':{Si:0.611,Fe:0.164,Cu:0.004,Mn:0.13,Mg:0.811,Cr:0.0002,Zn:0.009,Ti:0.023},
+'AAPSNNE-R':{Si:0.783,Fe:0.136,Cu:0.004,Mn:0.046,Mg:0.771,Cr:0,Zn:0.011,Ti:0.019},
+'AARSSPL':{Si:4.447,Fe:0.075,Cu:0.004,Mn:0.004,Mg:0.317,Cr:0,Zn:0.005,Ti:0.1},
+'AARSSPL-R':{Si:7.576,Fe:0.08,Cu:0.004,Mn:0.004,Mg:0.32,Cr:0.0001,Zn:0.004,Ti:0.098},
+'AA6061-IR':{Si:0.665,Fe:0.832,Cu:0.004,Mn:0.862,Mg:0.962,Cr:0.0008,Zn:0.064,Ti:0.043},
+'AACAN-R':{Si:0.152,Fe:0.417,Cu:0.004,Mn:0.823,Mg:0.979,Cr:0.0009,Zn:0.054,Ti:0.025}
+};
+
+function calc(ingotFrac, qty){
+    let comp={}; ELEMENTS.forEach(e=>comp[e]=0);
+
+    ELEMENTS.forEach(e=>{
+        comp[e]+=DATA['AA6061-I'][e]*ingotFrac;
+    });
+
+    let rem=1-ingotFrac;
+    let totalOther=0;
+
+    for(let k in qty){
+        if(k!=='AA6061-I') totalOther+=qty[k];
+    }
+
+    for(let k in qty){
+        if(k==='AA6061-I') continue;
+        let frac=(qty[k]/totalOther)*rem;
+        ELEMENTS.forEach(e=>{
+            comp[e]+=DATA[k][e]*frac;
+        });
+    }
+
+    return comp;
+}
+
+/* ================= RUN FUNCTION ================= */
+
+function run(){
+
+    let ingot = parseFloat(document.getElementById("ingot").value)/100;
+
+    let qty={};
+    scrapNames.forEach(n=>{
+        qty[n]=parseFloat(document.getElementById(n).value)||0;
+    });
+
+    let comp = calc(ingot, qty);
+
+    let tbody = document.querySelector("#resultTable tbody");
+    tbody.innerHTML="";
+
+    ELEMENTS.forEach(e=>{
+        let val=comp[e];
+        let [min,max]=TARGET[e];
+
+        let status="",cls="",adj="No change";
+
+        if(val<min){
+            status="LOW"; cls="low";
+            adj="+"+(min-val).toFixed(3)+"% needed";
+        }
+        else if(val>max){
+            status="HIGH"; cls="high";
+            adj="-"+(val-max).toFixed(3)+"% reduce";
+        }
+        else{
+            status="OK"; cls="ok";
+        }
+
+        tbody.innerHTML+=`
+        <tr>
+            <td>${e}</td>
+            <td>${val.toFixed(3)}</td>
+            <td>${min}-${max}</td>
+            <td class="${cls}">${status}</td>
+            <td>${adj}</td>
+        </tr>`;
+    });
+}
+
+</script>
+
+</body>
+</html>

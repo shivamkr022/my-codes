@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alloy Optimization System</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    width: 500px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+input {
+    width: 85%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: none;
+}
+
+table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 6px;
+    text-align: center;
+}
+
+th {
+    background: rgba(255,255,255,0.1);
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.run {
+    background: #3b82f6;
+    color: white;
+}
+
+.run:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+
+.reset {
+    background: #64748b;
+    color: white;
+}
+
+.success {
+    color: #22c55e;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+⚙️ Alloy Optimization System
+</header>
+
+<div class="container">
+
+<!-- INPUT -->
+<div class="card">
+<h3>🔹 Inputs</h3>
+
+<label>Batch Size (kg)</label><br>
+<input type="number" value="100"><br>
+
+<label>Ingot %</label><br>
+<input type="number" id="ingot" value="40"><br>
+
+<h4>Scrap Quantities (kg)</h4>
+
+<table>
+<tr><td>AA6061-I</td><td><input type="number" value="50"></td></tr>
+<tr><td>AARSNNE</td><td><input type="number" id="s2" value="30"></td></tr>
+<tr><td>AARSNNE-R</td><td><input type="number" id="s3" value="20"></td></tr>
+<tr><td>AAPSNNE</td><td><input type="number" id="s4" value="15"></td></tr>
+<tr><td>AAPSNNE-R</td><td><input type="number" id="s5" value="10"></td></tr>
+<tr><td>AARSSPL</td><td><input type="number" id="s6" value="5"></td></tr>
+<tr><td>AARSSPL-R</td><td><input type="number" id="s7" value="5"></td></tr>
+<tr><td>AA6061-IR</td><td><input type="number" id="s8" value="10"></td></tr>
+<tr><td>AACAN-R</td><td><input type="number" id="s9" value="5"></td></tr>
+</table>
+
+<button class="run" onclick="runCalc()">Run Optimization</button>
+<button class="reset" onclick="location.reload()">Reset</button>
+
+</div>
+
+<!-- OUTPUT -->
+<div class="card">
+<h3>📊 Output</h3>
+
+<div id="result">Click Run Optimization</div>
+<div id="chemistryTable"></div>
+
+</div>
+
+</div>
+
+<script>
+function runCalc() {
+
+let ingot = parseFloat(document.getElementById("ingot").value);
+
+let target = {
+    Si:[0.4,0.8], Fe:[0,1], Cu:[0,0.4], Mn:[0,1],
+    Mg:[0.8,1.2], Cr:[0,0.35], Zn:[0,0.25], Ti:[0,0.15]
+};
+
+let scrapData = {
+    "AA6061-I": {Si:0.7,Fe:0.84,Cu:0.004,Mn:0.88,Mg:0.95,Cr:0.0009,Zn:0.06,Ti:0.05},
+    "AARSNNE": {Si:0.37,Fe:0.20,Mg:0.34,Cu:0.004,Mn:0.004,Cr:0,Zn:0.07,Ti:0.018},
+    "AARSNNE-R": {Si:0.33,Fe:0.17,Mg:0.39,Cu:0.004,Mn:0.006,Cr:0,Zn:0.07,Ti:0.013},
+    "AAPSNNE": {Si:0.61,Fe:0.16,Mg:0.81,Cu:0.004,Mn:0.13,Cr:0.0002,Zn:0.009,Ti:0.02},
+    "AAPSNNE-R": {Si:0.78,Fe:0.13,Mg:0.77,Cu:0.004,Mn:0.046,Cr:0,Zn:0.01,Ti:0.019},
+    "AARSSPL": {Si:4.4,Fe:0.07,Mg:0.31,Cu:0.004,Mn:0.004,Cr:0,Zn:0.005,Ti:0.1},
+    "AARSSPL-R": {Si:7.5,Fe:0.08,Mg:0.32,Cu:0.004,Mn:0.004,Cr:0.0001,Zn:0.004,Ti:0.09},
+    "AA6061-IR": {Si:0.66,Fe:0.83,Mg:0.96,Cu:0.004,Mn:0.86,Cr:0.0008,Zn:0.06,Ti:0.04},
+    "AACAN-R": {Si:0.15,Fe:0.41,Mg:0.97,Cu:0.004,Mn:0.82,Cr:0.0009,Zn:0.05,Ti:0.02}
+};
+
+let scraps = [
+    {name:"AARSNNE", val:parseFloat(document.getElementById("s2").value)},
+    {name:"AARSNNE-R", val:parseFloat(document.getElementById("s3").value)},
+    {name:"AAPSNNE", val:parseFloat(document.getElementById("s4").value)},
+    {name:"AAPSNNE-R", val:parseFloat(document.getElementById("s5").value)},
+    {name:"AARSSPL", val:parseFloat(document.getElementById("s6").value)},
+    {name:"AARSSPL-R", val:parseFloat(document.getElementById("s7").value)},
+    {name:"AA6061-IR", val:parseFloat(document.getElementById("s8").value)},
+    {name:"AACAN-R", val:parseFloat(document.getElementById("s9").value)}
+];
+
+let available = scraps.filter(s => s.val > 0);
+let remaining = 100 - ingot;
+let per = remaining / available.length;
+
+let finalComp = {};
+
+Object.keys(target).forEach(elem => {
+    finalComp[elem] = scrapData["AA6061-I"][elem] * (ingot/100);
+    available.forEach(s => {
+        finalComp[elem] += scrapData[s.name][elem] * (per/100);
+    });
+});
+
+let table = `
+<table>
+<tr>
+<th>Element</th>
+<th>Result</th>
+<th>Range</th>
+<th>Status</th>
+<th>Adjustment</th>
+</tr>
+`;
+
+Object.keys(finalComp).forEach(elem => {
+
+    let val = finalComp[elem];
+    let min = target[elem][0];
+    let max = target[elem][1];
+
+    let status="", color="", adjust="";
+
+    if(val < min){
+        status="LOW";
+        color="#ef4444";
+        adjust = `+${(min-val).toFixed(3)}% needed`;
+    }
+    else if(val > max){
+        status="HIGH";
+        color="#ef4444";
+        adjust = `-${(val-max).toFixed(3)}% reduce`;
+    }
+    else{
+        status="OK";
+        color="#22c55e";
+        adjust = "No change";
+    }
+
+    table += `
+    <tr>
+        <td>${elem}</td>
+        <td>${val.toFixed(3)}</td>
+        <td>${min}-${max}</td>
+        <td style="color:${color}"><b>${status}</b></td>
+        <td>${adjust}</td>
+    </tr>
+    `;
+});
+
+table += "</table>";
+
+document.getElementById("result").innerHTML =
+`<p class="success">✅ Composition + Adjustment Suggestions</p>`;
+
+document.getElementById("chemistryTable").innerHTML = table;
+
+}
+</script>
+
+</body>
+</html>

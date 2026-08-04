@@ -1,0 +1,544 @@
+import numpy as np
+from itertools import combinations
+
+# ============================================================================
+#                    EXACT SCRAP DATA FROM YOUR INPUT
+# ============================================================================
+
+SCRAP_MATERIALS = {
+    'AA6061-I': {
+        'Si': 0.701, 'Fe': 0.843, 'Cu': 0.004, 'Mn': 0.888,
+        'Mg': 0.954, 'Cr': 0.0009, 'Zn': 0.069, 'Ti': 0.055,
+        'Al': 96.29
+    },
+    'AARSNNE': {
+        'Si': 0.373, 'Fe': 0.205, 'Cu': 0.004, 'Mn': 0.004,
+        'Mg': 0.344, 'Cr': 0.0, 'Zn': 0.077, 'Ti': 0.018,
+        'Al': 98.93
+    },
+    'AARSNNE-R': {
+        'Si': 0.339, 'Fe': 0.174, 'Cu': 0.004, 'Mn': 0.006,
+        'Mg': 0.394, 'Cr': 0.0, 'Zn': 0.074, 'Ti': 0.013,
+        'Al': 98.96
+    },
+    'AAPSNNE': {
+        'Si': 0.611, 'Fe': 0.164, 'Cu': 0.004, 'Mn': 0.13,
+        'Mg': 0.811, 'Cr': 0.0002, 'Zn': 0.009, 'Ti': 0.023,
+        'Al': 98.16
+    },
+    'AAPSNNE-R': {
+        'Si': 0.783, 'Fe': 0.136, 'Cu': 0.004, 'Mn': 0.046,
+        'Mg': 0.771, 'Cr': 0.0, 'Zn': 0.011, 'Ti': 0.019,
+        'Al': 98.45
+    },
+    'AARSSPL': {
+        'Si': 4.447, 'Fe': 0.075, 'Cu': 0.004, 'Mn': 0.004,
+        'Mg': 0.317, 'Cr': 0.0, 'Zn': 0.005, 'Ti': 0.1,
+        'Al': 91.62
+    },
+    'AARSSPL-R': {
+        'Si': 7.576, 'Fe': 0.08, 'Cu': 0.004, 'Mn': 0.004,
+        'Mg': 0.32, 'Cr': 0.0001, 'Zn': 0.004, 'Ti': 0.098,
+        'Al': 91.78
+    },
+    'AA6061-IR': {
+        'Si': 0.665, 'Fe': 0.832, 'Cu': 0.004, 'Mn': 0.862,
+        'Mg': 0.962, 'Cr': 0.0008, 'Zn': 0.064, 'Ti': 0.043,
+        'Al': 96.39
+    },
+    'AACAN-R': {
+        'Si': 0.152, 'Fe': 0.417, 'Cu': 0.004, 'Mn': 0.823,
+        'Mg': 0.979, 'Cr': 0.0009, 'Zn': 0.054, 'Ti': 0.025,
+        'Al': 97.47
+    }
+}
+
+TARGET_6061 = {
+    'Si': (0.4, 0.8),
+    'Fe': (0.0, 1.0),
+    'Cu': (0.0, 0.40),
+    'Mn': (0.0, 1.0),
+    'Mg': (0.8, 1.2),
+    'Cr': (0.0, 0.35),
+    'Zn': (0.0, 0.25),
+    'Ti': (0.0, 0.15)
+}
+
+ELEMENTS = ['Si', 'Fe', 'Cu', 'Mn', 'Mg', 'Cr', 'Zn', 'Ti']
+
+# ============================================================================
+#                    QUANTITY INPUT FUNCTIONS
+# ============================================================================
+
+def get_available_quantities():
+    """Get available quantities for all 9 scraps from user"""
+    print(f"\n{'═' * 70}")
+    print("  📦 ENTER AVAILABLE SCRAP QUANTITIES (in kg)")
+    print(f"{'═' * 70}")
+    print("  Enter 0 if a scrap is not available\n")
+    
+    quantities = {}
+    other_scraps = [name for name in SCRAP_MATERIALS.keys() if name != 'AA6061-I']
+    
+    while True:
+        try:
+            qty = input(f"  AA6061-I (Ingot) available (kg): ").strip()
+            qty = float(qty)
+            if qty >= 0:
+                quantities['AA6061-I'] = qty
+                break
+            else:
+                print("  ❌ Please enter a non-negative value")
+        except ValueError:
+            print("  ❌ Please enter a valid number")
+    
+    print(f"\n  {'─' * 50}")
+    print(f"  Other scraps:\n")
+    
+    for scrap in other_scraps:
+        while True:
+            try:
+                qty = input(f"  {scrap:<15} available (kg): ").strip()
+                qty = float(qty)
+                if qty >= 0:
+                    quantities[scrap] = qty
+                    break
+                else:
+                    print("  ❌ Please enter a non-negative value")
+            except ValueError:
+                print("  ❌ Please enter a valid number")
+    
+    return quantities
+
+
+def display_available_quantities(quantities, target_weight):
+    """Display available quantities"""
+    print(f"\n{'═' * 70}")
+    print(f"  📊 QUANTITY SUMMARY (Target: {target_weight} kg batch)")
+    print(f"{'═' * 70}")
+    
+    print(f"\n  {'Material':<18} {'Available (kg)':<18} {'Status':<15}")
+    print(f"  {'─' * 50}")
+    
+    for name, qty in quantities.items():
+        marker = "⭐" if name == 'AA6061-I' else "  "
+        status = "✅ Available" if qty > 0 else "❌ Not Available"
+        print(f"  {marker}{name:<16} {qty:<18.1f} {status}")
+
+
+# ============================================================================
+#                    FEASIBILITY CHECK FUNCTIONS
+# ============================================================================
+
+def check_feasibility(ingot_fraction, quantities, target_weight):
+    """Check if the target batch is feasible with available quantities"""
+    ingot_needed = ingot_fraction * target_weight
+    remaining_fraction = 1.0 - ingot_fraction
+    remaining_needed = remaining_fraction * target_weight
+    
+    issues = []
+    
+    ingot_available = quantities.get('AA6061-I', 0)
+    if ingot_needed > ingot_available:
+        issues.append({
+            'type': 'INGOT_SHORTAGE',
+            'material': 'AA6061-I',
+            'needed': ingot_needed,
+            'available': ingot_available,
+            'shortage': ingot_needed - ingot_available
+        })
+    
+    other_scraps = [name for name in SCRAP_MATERIALS.keys() if name != 'AA6061-I']
+    total_other_available = sum(quantities.get(s, 0) for s in other_scraps)
+    
+    if total_other_available < remaining_needed:
+        issues.append({
+            'type': 'TOTAL_OTHER_SHORTAGE',
+            'needed': remaining_needed,
+            'available': total_other_available,
+            'shortage': remaining_needed - total_other_available
+        })
+    
+    return issues, []
+
+
+def analyze_shortage(ingot_fraction, quantities, target_weight, composition, violations):
+    """Analyze what's missing and how much to add"""
+    print(f"\n{'═' * 70}")
+    print(f"  📊 SHORTAGE ANALYSIS")
+    print(f"{'═' * 70}")
+    
+    ingot_needed = ingot_fraction * target_weight
+    ingot_available = quantities.get('AA6061-I', 0)
+    
+    print(f"\n  🔒 AA6061-I (INGOT):")
+    print(f"     Required: {ingot_needed:.1f} kg ({ingot_fraction*100:.1f}%)")
+    print(f"     Available: {ingot_available:.1f} kg")
+    
+    if ingot_needed > ingot_available:
+        shortage = ingot_needed - ingot_available
+        print(f"     ❌ SHORTAGE: {shortage:.1f} kg")
+    else:
+        remaining = ingot_available - ingot_needed
+        print(f"     ✅ SUFFICIENT (surplus: {remaining:.1f} kg)")
+    
+    other_scraps = [name for name in SCRAP_MATERIALS.keys() if name != 'AA6061-I']
+    remaining_needed = (1.0 - ingot_fraction) * target_weight
+    
+    print(f"\n  📦 OTHER SCRAPS (Total needed: {remaining_needed:.1f} kg):")
+    
+    total_available = 0
+    for scrap in other_scraps:
+        available = quantities.get(scrap, 0)
+        total_available += available
+    
+    total_shortage = max(0, remaining_needed - total_available)
+    if total_shortage > 0:
+        print(f"\n     ❌ TOTAL SHORTAGE: {total_shortage:.1f} kg")
+    else:
+        surplus = total_available - remaining_needed
+        print(f"\n     ✅ SUFFICIENT (surplus: {surplus:.1f} kg)")
+    
+    if violations:
+        print(f"\n  🧪 COMPOSITION ISSUES:")
+        for elem, val, min_v, max_v, status in violations:
+            if status == 'LOW':
+                deficit = min_v - val
+                print(f"     • {elem}: {val:.3f}% is {deficit:.3f}% BELOW target")
+            else:
+                excess = val - max_v
+                print(f"     • {elem}: {val:.3f}% is {excess:.3f}% ABOVE target")
+    
+    return total_shortage
+
+
+# ============================================================================
+#                    OPTIMIZATION FUNCTIONS
+# ============================================================================
+
+def calculate_mixed_composition(ingot_fraction, other_fractions):
+    """Calculate final composition from AA6061-I + other scraps"""
+    composition = {elem: 0.0 for elem in ELEMENTS}
+    
+    for elem in ELEMENTS:
+        composition[elem] += SCRAP_MATERIALS['AA6061-I'][elem] * ingot_fraction
+    
+    for material, fraction in other_fractions.items():
+        for elem in ELEMENTS:
+            composition[elem] += SCRAP_MATERIALS[material][elem] * fraction
+    
+    return composition
+
+
+def calculate_composition_score(composition):
+    """Calculate how close composition is to ideal 6061 center"""
+    score = 0
+    for elem in ELEMENTS:
+        min_val, max_val = TARGET_6061[elem]
+        center = (min_val + max_val) / 2
+        range_size = max_val - min_val if max_val > min_val else 0.1
+        
+        val = composition[elem]
+        
+        if val < min_val:
+            score += ((min_val - val) / range_size * 100) ** 2
+        elif val > max_val:
+            score += ((val - max_val) / range_size * 100) ** 2
+        else:
+            score += ((val - center) / range_size * 10) ** 2
+    
+    return score
+
+
+def check_6061_compliance(composition):
+    """Check if composition meets adjusted 6061 specifications"""
+    violations = []
+    all_ok = True
+    
+    for elem, (min_val, max_val) in TARGET_6061.items():
+        val = composition[elem]
+        if val < min_val:
+            violations.append((elem, val, min_val, max_val, 'LOW'))
+            all_ok = False
+        elif val > max_val:
+            violations.append((elem, val, min_val, max_val, 'HIGH'))
+            all_ok = False
+    
+    return all_ok, violations
+
+
+def optimize_with_quantities(ingot_fraction, quantities, target_weight):
+    """Find optimal combination considering quantity constraints"""
+    remaining_fraction = 1.0 - ingot_fraction
+    remaining_weight = remaining_fraction * target_weight
+    
+    solutions = []
+    other_scraps = [name for name in SCRAP_MATERIALS.keys() if name != 'AA6061-I']
+    available_scraps = [s for s in other_scraps if quantities.get(s, 0) > 0]
+    
+    if not available_scraps:
+        return [], [], []
+    
+    # Try single scrap
+    for scrap in available_scraps:
+        other_fractions = {scrap: remaining_fraction}
+        composition = calculate_mixed_composition(ingot_fraction, other_fractions)
+        compliant, violations = check_6061_compliance(composition)
+        
+        qty_needed = remaining_weight
+        qty_available = quantities.get(scrap, 0)
+        qty_feasible = qty_needed <= qty_available
+        
+        solutions.append({
+            'other_materials': other_fractions,
+            'composition': composition,
+            'compliant': compliant,
+            'violations': violations,
+            'violation_count': len(violations),
+            'comp_score': calculate_composition_score(composition),
+            'qty_feasible': qty_feasible
+        })
+    
+    # Try two scrap combinations
+    for scrap1, scrap2 in combinations(available_scraps, 2):
+        for split in np.arange(0.1, 1.0, 0.1):
+            frac1 = remaining_fraction * split
+            frac2 = remaining_fraction * (1 - split)
+            
+            qty1_needed = frac1 * target_weight
+            qty2_needed = frac2 * target_weight
+            qty1_available = quantities.get(scrap1, 0)
+            qty2_available = quantities.get(scrap2, 0)
+            
+            other_fractions = {scrap1: frac1, scrap2: frac2}
+            composition = calculate_mixed_composition(ingot_fraction, other_fractions)
+            compliant, violations = check_6061_compliance(composition)
+            
+            qty_feasible = (qty1_needed <= qty1_available) and (qty2_needed <= qty2_available)
+            
+            solutions.append({
+                'other_materials': other_fractions,
+                'composition': composition,
+                'compliant': compliant,
+                'violations': violations,
+                'violation_count': len(violations),
+                'comp_score': calculate_composition_score(composition),
+                'qty_feasible': qty_feasible
+            })
+    
+    # Try three scrap combinations
+    for combo in combinations(available_scraps, 3):
+        for s1 in np.arange(0.2, 0.7, 0.2):
+            for s2 in np.arange(0.1, 0.8 - s1, 0.2):
+                s3 = 1.0 - s1 - s2
+                if s3 >= 0.1:
+                    other_fractions = {
+                        combo[0]: remaining_fraction * s1,
+                        combo[1]: remaining_fraction * s2,
+                        combo[2]: remaining_fraction * s3
+                    }
+                    
+                    qty_feasible = True
+                    for mat, frac in other_fractions.items():
+                        if frac * target_weight > quantities.get(mat, 0):
+                            qty_feasible = False
+                            break
+                    
+                    composition = calculate_mixed_composition(ingot_fraction, other_fractions)
+                    compliant, violations = check_6061_compliance(composition)
+                    
+                    solutions.append({
+                        'other_materials': other_fractions,
+                        'composition': composition,
+                        'compliant': compliant,
+                        'violations': violations,
+                        'violation_count': len(violations),
+                        'comp_score': calculate_composition_score(composition),
+                        'qty_feasible': qty_feasible
+                    })
+    
+    # Remove duplicates
+    unique_solutions = []
+    seen_compositions = set()
+    
+    for sol in solutions:
+        comp_key = tuple(round(sol['composition'][elem], 3) for elem in ELEMENTS)
+        if comp_key not in seen_compositions:
+            seen_compositions.add(comp_key)
+            unique_solutions.append(sol)
+    
+    # Sort
+    feasible_compliant = [s for s in unique_solutions if s['compliant'] and s['qty_feasible']]
+    non_feasible_compliant = [s for s in unique_solutions if s['compliant'] and not s['qty_feasible']]
+    non_compliant = [s for s in unique_solutions if not s['compliant']]
+    
+    feasible_compliant.sort(key=lambda x: x['comp_score'])
+    non_feasible_compliant.sort(key=lambda x: x['comp_score'])
+    non_compliant.sort(key=lambda x: (x['violation_count'], x['comp_score']))
+    
+    return feasible_compliant, non_feasible_compliant, non_compliant
+
+
+# ============================================================================
+#                    DISPLAY FUNCTIONS
+# ============================================================================
+
+def display_composition(sol):
+    """Display composition analysis only"""
+    print(f"\n  🧪 COMPOSITION ANALYSIS:")
+    print(f"  {'─' * 65}")
+    print(f"  {'Element':<8} {'Result':<10} {'Min':<8} {'Max':<8} {'Status':<15}")
+    print(f"  {'─' * 65}")
+    
+    for elem in ELEMENTS:
+        result = sol['composition'][elem]
+        min_val, max_val = TARGET_6061[elem]
+        
+        if result < min_val:
+            diff = min_val - result
+            status = f"❌ LOW by {diff:.3f}%"
+        elif result > max_val:
+            diff = result - max_val
+            status = f"❌ HIGH by {diff:.3f}%"
+        else:
+            margin = min(result - min_val, max_val - result)
+            status = f"✅ OK (margin: {margin:.3f}%)"
+        
+        print(f"  {elem:<8} {result:>8.3f}%  {min_val:>6.2f}%  {max_val:>6.2f}%  {status}")
+
+
+def display_feasible_recipe(sol, ingot_fraction, target_weight, quantities):
+    """Display recipe card for feasible solution"""
+    ingot_weight = ingot_fraction * target_weight
+    
+    print(f"\n{'█' * 70}")
+    print(f"  🏆 FINAL RECIPE FOR {target_weight} kg OF 6061 ALUMINUM")
+    print(f"{'█' * 70}")
+    
+    print(f"\n  ┌{'─' * 65}┐")
+    print(f"  │ {'MATERIAL':<20} │ {'WEIGHT (kg)':<15} │ {'PERCENTAGE':<12} │ {'AVAILABLE':<12} │")
+    print(f"  ├{'─' * 22}┼{'─' * 17}┼{'─' * 14}┼{'─' * 14}┤")
+    
+    avail = quantities.get('AA6061-I', 0)
+    print(f"  │ {'AA6061-I':<20} │ {ingot_weight:<15.1f} │ {f'{ingot_fraction*100:.1f}%':<12} │ {avail:.1f} kg{'':<6} │")
+    
+    for mat, frac in sol['other_materials'].items():
+        if frac > 0.005:
+            weight = frac * target_weight
+            percent = frac * 100
+            avail = quantities.get(mat, 0)
+            print(f"  │ {mat:<20} │ {weight:<15.1f} │ {f'{percent:.1f}%':<12} │ {avail:.1f} kg{'':<6} │")
+    
+    print(f"  ├{'─' * 22}┼{'─' * 17}┼{'─' * 14}┼{'─' * 14}┤")
+    print(f"  │ {'TOTAL':<20} │ {target_weight:<15.1f} │ {'100.0%':<12} │ {'---':<12} │")
+    print(f"  └{'─' * 65}┘")
+
+
+def display_partial_recipe(sol, ingot_fraction, target_weight, quantities):
+    """Display recipe showing available vs needed"""
+    ingot_weight = ingot_fraction * target_weight
+    
+    print(f"\n{'█' * 70}")
+    print(f"  ⚠️ RECIPE WITH QUANTITY SHORTAGE")
+    print(f"{'█' * 70}")
+    
+    print(f"\n  ┌{'─' * 75}┐")
+    print(f"  │ {'MATERIAL':<18} │ {'NEEDED (kg)':<14} │ {'AVAILABLE':<14} │ {'STATUS':<25} │")
+    print(f"  ├{'─' * 20}┼{'─' * 16}┼{'─' * 16}┼{'─' * 27}┤")
+    
+    ingot_available = quantities.get('AA6061-I', 0)
+    if ingot_weight > ingot_available:
+        shortage = ingot_weight - ingot_available
+        status = f"❌ SHORT by {shortage:.1f} kg"
+    else:
+        status = "✅ OK"
+    print(f"  │ {'AA6061-I':<18} │ {ingot_weight:<14.1f} │ {ingot_available:<14.1f} │ {status:<25} │")
+    
+    for mat, frac in sol['other_materials'].items():
+        if frac > 0.005:
+            weight_needed = frac * target_weight
+            avail = quantities.get(mat, 0)
+            
+            if weight_needed > avail:
+                shortage = weight_needed - avail
+                status = f"❌ SHORT by {shortage:.1f} kg"
+            else:
+                status = "✅ OK"
+            
+            print(f"  │ {mat:<18} │ {weight_needed:<14.1f} │ {avail:<14.1f} │ {status:<25} │")
+    
+    print(f"  └{'─' * 75}┘")
+
+
+# ============================================================================
+#                    MAIN FUNCTION
+# ============================================================================
+
+def main():
+    print("\n" + "=" * 70)
+    print("     🏭 ALUMINUM 6061 SCRAP OPTIMIZER")
+    print("=" * 70)
+    
+    target_weight = 100  # kg
+    
+    quantities = get_available_quantities()
+    display_available_quantities(quantities, target_weight)
+    
+    print("\n" + "=" * 70)
+    print("  ENTER AA6061-I INGOT PERCENTAGE")
+    print("=" * 70)
+    
+    while True:
+        try:
+            ingot_input = input("\n  Enter percentage of AA6061-I (1-100): ").strip()
+            ingot_percent = float(ingot_input)
+            
+            if 1 <= ingot_percent <= 100:
+                break
+            else:
+                print("  ❌ Please enter a value between 1 and 100")
+        except ValueError:
+            print("  ❌ Please enter a valid number")
+    
+    ingot_fraction = ingot_percent / 100.0
+    
+    print(f"\n  🔍 OPTIMIZING SCRAP MIX...")
+    
+    feasible_solutions, non_feasible_compliant, non_compliant = optimize_with_quantities(
+        ingot_fraction, quantities, target_weight
+    )
+    
+    print(f"\n{'═' * 70}")
+    print(f"  📊 RESULTS")
+    print(f"{'═' * 70}")
+    print(f"  ✅ Fully Feasible: {len(feasible_solutions)}")
+    print(f"  ⚠️  Compliant but short: {len(non_feasible_compliant)}")
+    print(f"  ❌ Non-Compliant: {len(non_compliant)}")
+    
+    if feasible_solutions:
+        best_solution = feasible_solutions[0]
+        display_composition(best_solution)
+        display_feasible_recipe(best_solution, ingot_fraction, target_weight, quantities)
+    
+    elif non_feasible_compliant:
+        best_solution = non_feasible_compliant[0]
+        display_composition(best_solution)
+        display_partial_recipe(best_solution, ingot_fraction, target_weight, quantities)
+        analyze_shortage(ingot_fraction, quantities, target_weight, 
+                        best_solution['composition'], best_solution['violations'])
+    
+    else:
+        print(f"\n  ❌ NO COMPLIANT SOLUTION POSSIBLE")
+        
+        if non_compliant:
+            best_solution = non_compliant[0]
+            display_composition(best_solution)
+            
+            print(f"\n  💡 SUGGESTIONS:")
+            print(f"  1. Try adjusting the AA6061-I percentage")
+            print(f"  2. Add different scrap materials")
+            print(f"  3. Consider using master alloys for deficient elements")
+
+
+if __name__ == "__main__":
+    main()
